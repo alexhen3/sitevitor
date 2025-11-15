@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitor DasLents - Social Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #7c3aed; /* violet-600 */
+            --primary-2: #06b6d4; /* cyan-500 */
+            --primary-dark: #5b21b6;
+            --accent: linear-gradient(135deg, rgba(124,58,237,1) 0%, rgba(6,182,212,1) 100%);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-dark: #0b1020;
+            --bg-light: #0f172a;
+            --surface: rgba(255,255,255,0.06);
+            --glass: rgba(255,255,255,0.06);
+            --text-primary: #e6eef8;
+            --text-secondary: #9fb3c8;
+            --muted: rgba(230,238,248,0.6);
+            --border: rgba(255,255,255,0.06);
+            --shadow-sm: 0 6px 18px rgba(11,16,32,0.35);
+            --shadow-md: 0 12px 30px rgba(11,16,32,0.45);
+            --shadow-lg: 0 30px 60px rgba(11,16,32,0.55);
+            --glass-blur: 10px;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent), radial-gradient(1000px 500px at 90% 90%, rgba(6,182,212,0.08), transparent), linear-gradient(180deg, #071028 0%, #081226 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background 0.6s ease;
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            gap: 18px;
+            padding: 18px;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 300px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+            background-image: var(--accent);
+            color: var(--text-primary);
+            padding: 28px 20px;
+            overflow-y: auto;
+            box-shadow: 0 8px 30px rgba(15,23,42,0.6);
+            position: relative;
+            z-index: 100;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            backdrop-filter: blur(var(--glass-blur));
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            padding: 14px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(11,16,32,0.35) inset;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu-item {
+            padding: 12px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.22s ease, background 0.22s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            border-left: 3px solid transparent;
+            background: transparent;
+        }
+
+        .menu-item:hover {
+            background: rgba(255,255,255,0.04);
+            transform: translateX(6px) scale(1.01);
+        }
+
+        .menu-item.active {
+            background: linear-gradient(90deg, rgba(124,58,237,0.18), rgba(6,182,212,0.12));
+            border-left-color: rgba(255,255,255,0.6);
+            transform: translateX(6px) scale(1.02);
+        }
+
+        .menu-item-icon {
+            font-size: 20px;
+        }
+
+        /* MAIN CONTENT */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .top-bar {
+            background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            padding: 18px 28px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 6px 20px rgba(11,16,32,0.45);
+            backdrop-filter: blur(6px);
+        }
+
+        .top-bar h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+            box-shadow: 0 8px 24px rgba(12,18,35,0.45);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            background-clip: padding-box;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 18px 40px rgba(124,58,237,0.12);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(90deg, rgba(16,185,129,0.95), rgba(16,185,129,0.85));
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 34px rgba(16,185,129,0.12);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .pages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px 40px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* MODALS */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.7));
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-dialog {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+            border-radius: 14px;
+            width: 92%;
+            max-width: 560px;
+            box-shadow: 0 30px 60px rgba(2,6,23,0.5);
+            padding: 0;
+            max-height: 86vh;
+            overflow-y: auto;
+            transform: translateY(8px) scale(0.995);
+            transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 220ms ease;
+            opacity: 0;
+        }
+
+        .modal-overlay.active .modal-dialog {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 25px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .modal-footer {
+            padding: 20px 25px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        /* FILTERS */
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 18px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(2,6,23,0.5);
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: transform 0.24s cubic-bezier(.2,.9,.3,1), box-shadow 0.24s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            left: -40%;
+            top: -40%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(124,58,237,0.06), transparent 10%), radial-gradient(circle at 70% 70%, rgba(6,182,212,0.04), transparent 10%);
+            transform: rotate(12deg);
+            pointer-events: none;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 30px 60px rgba(2,6,23,0.6);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .card-desc {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .card-status {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-concluido {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-pendente {
+            background: #fecaca;
+            color: #7f1d1d;
+        }
+
+        .status-rascunho {
+            background: #ddd6fe;
+            color: #3f0f5c;
+        }
+
+        .status-fazendo {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-em-progresso {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-nao-iniciado {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .card-link {
+            background: #f0f9ff;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 12px;
+            word-break: break-all;
+        }
+
+        .card-link a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .card-link a:hover {
+            text-decoration: underline;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .card-actions button {
+            flex: 1;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        /* TABLE */
+        .table-wrapper {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--bg-light);
+            padding: 16px;
+            text-align: left;
+            font-weight: 700;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: var(--bg-light);
+        }
+
+        /* CALENDAR */
+        .calendar-wrapper {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.04);
+            padding: 28px;
+            box-shadow: 0 12px 30px rgba(2,6,23,0.5);
+            color: var(--text-primary);
+            backdrop-filter: blur(6px);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .calendar-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .calendar-nav button {
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--muted);
+            transition: transform 0.18s ease, background 0.18s ease;
+        }
+
+        .calendar-nav button:hover {
+            background: rgba(124,58,237,0.12);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .weekday {
+            text-align: center;
+            font-weight: 700;
+            color: var(--muted);
+            padding: 10px 6px;
+            font-size: 13px;
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .day-cell {
+            aspect-ratio: 1;
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255,255,255,0.02);
+            min-height: 100px;
+            color: var(--text-primary);
+        }
+
+        .day-cell:hover {
+            border-color: rgba(124,58,237,0.6);
+            background: rgba(124,58,237,0.04);
+            transform: translateY(-6px);
+            box-shadow: 0 18px 36px rgba(2,6,23,0.45);
+        }
+
+        .day-cell.other-month {
+            background: transparent;
+            color: var(--muted);
+            opacity: 0.7;
+        }
+
+        .day-cell.today {
+            border: 2px solid var(--primary-2);
+            background: rgba(6,182,212,0.06);
+        }
+
+        .day-number {
+            font-weight: 800;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .day-event {
+            background: linear-gradient(90deg, rgba(124,58,237,0.95), rgba(6,182,212,0.9));
+            color: white;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            margin-top: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(124,58,237,0.12);
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .top-bar {
+                padding: 15px 20px;
+            }
+
+            .pages-container {
+                padding: 15px 20px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-dialog {
+                width: 95%;
+            }
+        }
+
+        .footer-signature {
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: right;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-signature a {
+            color: var(--primary-2);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-signature a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-brand">
+                <span>📊</span>
+                <span>Vitor DasLents</span>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item active" onclick="goToPage('postagens')">
+                    <span class="menu-item-icon">📱</span>
+                    <span>Postagens</span>
+                </div>
+                <div class="menu-item" onclick="goToPage('musicas')">
+                    <span class="menu-item-icon">🎵</span>
+                    <span>Músicas</span>
+                </div>
+                <div class="menu-item" onclick="goToPage('agenda')">
+                    <span class="menu-item-icon">📅</span>
+                    <span>Agenda</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-container">
+            <!-- TOP BAR -->
+            <div class="top-bar">
+                <h1 id="page-title">📱 Postagens</h1>
+                <button class="btn btn-secondary" id="add-btn" onclick="handleAddClick()">
+                    <span>➕</span>
+                    <span>Novo</span>
+                </button>
+            </div>
+
+            <!-- PAGES -->
+            <div class="pages-container">
+                <!-- PAGE: POSTAGENS -->
+                <div id="page-postagens" class="page active">
+                    <div class="filter-bar" id="filter-postagens">
+                        <button class="filter-btn active" onclick="filterPostagens('all')">Todos</button>
+                        <button class="filter-btn" onclick="filterPostagens('concluido')">✓ Concluído</button>
+                        <button class="filter-btn" onclick="filterPostagens('pendente')">⏳ Pendente</button>
+                        <button class="filter-btn" onclick="filterPostagens('rascunho')">📝 Rascunho</button>
+                        <button class="filter-btn" onclick="filterPostagens('fazendo')">⚙️ Fazendo</button>
+                    </div>
+                    <div id="postagens-grid" class="cards-grid"></div>
+                </div>
+
+                <!-- PAGE: MUSICAS -->
+                <div id="page-musicas" class="page">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" onclick="switchMusicaTab('status')">Status do Lançamento</button>
+                    </div>
+                    <div id="musicas-content"></div>
+                </div>
+
+                <!-- PAGE: AGENDA -->
+                <div id="page-agenda" class="page">
+                    <div class="calendar-wrapper">
+                        <div class="calendar-header">
+                            <h2 id="calendar-month">Novembro 2025</h2>
+                            <div class="calendar-nav">
+                                <button onclick="prevMonth()">← Anterior</button>
+                                <button onclick="todayMonth()">Hoje</button>
+                                <button onclick="nextMonth()">Próximo →</button>
+                            </div>
+                        </div>
+                        <div class="weekdays">
+                            <div class="weekday">Dom</div>
+                            <div class="weekday">Seg</div>
+                            <div class="weekday">Ter</div>
+                            <div    class="weekday">Qua</div>
+                            <div class="weekday">Qui</div>
+                            <div class="weekday">Sex</div>
+                            <div class="weekday">Sab</div>
+                        </div>
+                        <div id="calendar-grid" class="days-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER SIGNATURE -->
+    <div class="footer-signature">
+        <div>Desenvolvido por</div>
+        <div><strong>Alex Henrique</strong></div>
+    </div>
+
+    <!-- MODALS -->
+    <!-- Modal Postagem -->
+    <div id="modal-postagem" class="modal-overlay" onclick="closeModal(event, 'modal-postagem')">
+        <div class="modal-dialog" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 id="modal-postagem-title">Nova Postagem</h2>
+                <button class="close-btn" onclick="closeModal(null, 'modal-postagem')">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-postagem" onsubmit="savePostagem(event)">
+                    <div class="form-group">
+                        <label for="post-nome">Nome da Postagem</label>
+                        <input type="text" id="post-nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-desc">Descrição</label>
+                        <textarea id="post-desc" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-status">Status</label>
+                        <select id="post-status" required onchange="togglePostLink()">
+                            <option value="">Selecione...</option>
+                            <option value="rascunho">📝 Rascunho</option>
+                            <option value="pendente">⏳ Pendente</option>
+                            <option value="fazendo">⚙️ Fazendo</option>
+                            <option value="concluido">✓ Concluído</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-design-status">Status do Design</label>
+                        <select id="post-design-status">
+                            <option value="">Selecione...</option>
+                            <option value="nao-iniciado">⭕ Não Iniciado</option>
+                            <option value="em-progresso">🔄 Em Progresso</option>
+                            <option value="concluido">✓ Concluído</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-video-status">Status da Edição de Vídeo</label>
+                        <select id="post-video-status">
+                            <option value="">Selecione...</option>
+                            <option value="nao-iniciado">⭕ Não Iniciado</option>
+                             <option value="nao-precisa">⭕ Não Precisa</option>
+                            <option value="em-progresso">🔄 Em Progresso</option>
+                            <option value="concluido">✓ Concluído</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="post-link-group" style="display:none;">
+                        <label for="post-link">Link da Postagem</label>
+                        <input type="url" id="post-link" placeholder="https://...">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal(null, 'modal-postagem')">Cancelar</button>
+                <button class="btn btn-secondary" onclick="document.getElementById('form-postagem').requestSubmit()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Música -->
+    <div id="modal-musica" class="modal-overlay" onclick="closeModal(event, 'modal-musica')">
+        <div class="modal-dialog" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 id="modal-musica-title">Nova Música</h2>
+                <button class="close-btn" onclick="closeModal(null, 'modal-musica')">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-musica" onsubmit="saveMusica(event)">
+                    <div class="form-group">
+                        <label for="mus-nome">Nome da Música</label>
+                        <input type="text" id="mus-nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mus-desc">Descrição</label>
+                        <textarea id="mus-desc" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="mus-status">Status do Lançamento</label>
+                        <select id="mus-status" required onchange="toggleMusicaFields()">
+                            <option value="">Selecione...</option>
+                            <option value="rascunho">📝 Rascunho</option>
+                            <option value="pendente">⏳ Pendente</option>
+                            <option value="fazendo">⚙️ Fazendo</option>
+                            <option value="concluido">✓ Concluído</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="mus-link-group" style="display:none;">
+                        <label for="mus-link">Link da Música</label>
+                        <input type="url" id="mus-link" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label for="capa-status">Status da Capa</label>
+                        <select id="capa-status">
+                            <option value="">Selecione...</option>
+                            <option value="nao-iniciado">⭕ Não Iniciado</option>
+                            <option value="em-progresso">🔄 Em Progresso</option>
+                            <option value="concluido">✓ Concluído</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="materiais-status">Status dos Materiais</label>
+                        <select id="materiais-status">
+                            <option value="">Selecione...</option>
+                            <option value="nao-iniciado">⭕ Não Iniciado</option>
+                            <option value="em-progresso">🔄 Em Progresso</option>
+                            <option value="concluido">✓ Concluído</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal(null, 'modal-musica')">Cancelar</button>
+                <button class="btn btn-secondary" onclick="document.getElementById('form-musica').requestSubmit()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Evento -->
+    <div id="modal-evento" class="modal-overlay" onclick="closeModal(event, 'modal-evento')">
+        <div class="modal-dialog" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2>Novo Compromisso</h2>
+                <button class="close-btn" onclick="closeModal(null, 'modal-evento')">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-evento" onsubmit="saveEvento(event)">
+                    <div class="form-group">
+                        <label for="ev-titulo">Título</label>
+                        <input type="text" id="ev-titulo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ev-data">Data</label>
+                        <input type="date" id="ev-data" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ev-desc">Descrição</label>
+                        <textarea id="ev-desc"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal(null, 'modal-evento')">Cancelar</button>
+                <button class="btn btn-secondary" onclick="document.getElementById('form-evento').requestSubmit()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let state = {
+            currentPage: 'postagens',
+            currentFilter: 'all',
+            currentMonth: new Date(),
+            currentMusicaTab: 'status',
+            editingId: null,
+            postagens: JSON.parse(localStorage.getItem('postagens')) || [],
+            musicas: JSON.parse(localStorage.getItem('musicas')) || [],
+            eventos: JSON.parse(localStorage.getItem('eventos')) || []
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderPostagens();
+            renderCalendar();
+        });
+
+        function goToPage(page) {
+            state.currentPage = page;
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            event.target.closest('.menu-item').classList.add('active');
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`page-${page}`).classList.add('active');
+            const titles = {
+                'postagens': '📱 Postagens',
+                'musicas': '🎵 Músicas',
+                'agenda': '📅 Agenda'
+            };
+            document.getElementById('page-title').textContent = titles[page];
+            if (page === 'musicas') renderMusicasTab('status');
+            if (page === 'agenda') renderCalendar();
+        }
+
+        function handleAddClick() {
+            if (state.currentPage === 'postagens') {
+                state.editingId = null;
+                document.getElementById('modal-postagem-title').textContent = 'Nova Postagem';
+                document.getElementById('form-postagem').reset();
+                togglePostLink();
+                document.getElementById('modal-postagem').classList.add('active');
+            } else if (state.currentPage === 'musicas') {
+                state.editingId = null;
+                document.getElementById('modal-musica-title').textContent = 'Nova Música';
+                document.getElementById('form-musica').reset();
+                toggleMusicaFields();
+                document.getElementById('modal-musica').classList.add('active');
+            } else if (state.currentPage === 'agenda') {
+                document.getElementById('form-evento').reset();
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('ev-data').value = today;
+                document.getElementById('modal-evento').classList.add('active');
+            }
+        }
+
+        function closeModal(evt, modalId) {
+            if (evt && evt.target.id !== modalId) return;
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function filterPostagens(filter) {
+            state.currentFilter = filter;
+            document.querySelectorAll('#filter-postagens .filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderPostagens();
+        }
+
+        function renderPostagens() {
+            let posts = state.postagens;
+            if (state.currentFilter !== 'all') posts = posts.filter(p => p.status === state.currentFilter);
+            const grid = document.getElementById('postagens-grid');
+            if (posts.length === 0) {
+                grid.innerHTML = `<div class="empty-state" style="grid-column: 1/-1;"><div class="empty-icon">📭</div><h3>Nenhuma postagem</h3><p>Clique em "Novo" para criar sua primeira postagem</p></div>`;
+                return;
+            }
+            grid.innerHTML = posts.map(post => `
+                <div class="card">
+                    <div class="card-title">${post.nome}</div>
+                    <div class="card-desc">${post.descricao}</div>
+                    <div class="card-status">
+                        <span class="status-badge status-${post.status}">${getStatusLabel(post.status)}</span>
+                        <span style="width:8px"></span>
+                        <span class="status-badge status-${post.designStatus || 'nao-iniciado'}">${getDesignLabel(post.designStatus)}</span>
+                        <span style="width:8px"></span>
+                        <span class="status-badge status-${post.videoStatus || 'nao-iniciado'}">${getVideoLabel(post.videoStatus)}</span>
+                    </div>
+                    ${post.link ? `<div class="card-link">🔗 <a href="${post.link}" target="_blank">${post.link}</a></div>` : ''}
+                    <div class="card-actions">
+                        <button class="btn btn-primary btn-small" onclick="editPostagem(${post.id})">Editar</button>
+                        <button class="btn btn-danger btn-small" onclick="deletePostagem(${post.id})">Deletar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function togglePostLink() {
+            const status = document.getElementById('post-status').value;
+            document.getElementById('post-link-group').style.display = status === 'concluido' ? 'block' : 'none';
+        }
+
+        function savePostagem(evt) {
+            evt.preventDefault();
+            const nome = document.getElementById('post-nome').value;
+            const descricao = document.getElementById('post-desc').value;
+            const status = document.getElementById('post-status').value;
+            const link = document.getElementById('post-link').value;
+            const designStatus = document.getElementById('post-design-status').value || 'nao-iniciado';
+            const videoStatus = document.getElementById('post-video-status').value || 'nao-iniciado';
+
+            if (state.editingId) {
+                const post = state.postagens.find(p => p.id === state.editingId);
+                post.nome = nome; post.descricao = descricao; post.status = status; post.link = link;
+                post.designStatus = designStatus; post.videoStatus = videoStatus;
+            } else {
+                state.postagens.push({id: Date.now(), nome, descricao, status, link, designStatus, videoStatus, data: new Date().toLocaleDateString('pt-BR')});
+            }
+
+            localStorage.setItem('postagens', JSON.stringify(state.postagens));
+            closeModal(null, 'modal-postagem');
+            renderPostagens();
+        }
+
+        function editPostagem(id) {
+            state.editingId = id;
+            const post = state.postagens.find(p => p.id === id);
+            document.getElementById('modal-postagem-title').textContent = 'Editar Postagem';
+            document.getElementById('post-nome').value = post.nome;
+            document.getElementById('post-desc').value = post.descricao;
+            document.getElementById('post-status').value = post.status;
+            document.getElementById('post-link').value = post.link || '';
+            document.getElementById('post-design-status').value = post.designStatus || '';
+            document.getElementById('post-video-status').value = post.videoStatus || '';
+            togglePostLink();
+            document.getElementById('modal-postagem').classList.add('active');
+        }
+
+        function deletePostagem(id) {
+            if (confirm('Deletar esta postagem?')) {
+                state.postagens = state.postagens.filter(p => p.id !== id);
+                localStorage.setItem('postagens', JSON.stringify(state.postagens));
+                renderPostagens();
+            }
+        }
+
+        function switchMusicaTab(tab) {
+            state.currentMusicaTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderMusicasTab(tab);
+        }
+
+        function renderMusicasTab(tab) {
+            const container = document.getElementById('musicas-content');
+            if (state.musicas.length === 0) {
+                container.innerHTML = `<div class="empty-state"><div class="empty-icon">🎵</div><h3>Nenhuma música registrada</h3><p>Clique em "Novo" para adicionar</p></div>`;
+                return;
+            }
+            if (tab === 'status') {
+                container.innerHTML = `<div class="table-wrapper"><table><thead><tr><th>Música</th><th>Descrição</th><th>Status</th><th>Link</th><th>Ações</th></tr></thead><tbody>${state.musicas.map(m => `<tr><td><strong>${m.nome}</strong></td><td>${m.descricao.substring(0, 40)}...</td><td><span class="status-badge status-${m.status}">${getStatusLabel(m.status)}</span></td><td>${m.link ? `<a href="${m.link}" target="_blank">🔗</a>` : '-'}</td><td><button class="btn btn-primary btn-small" onclick="editMusica(${m.id})">Editar</button><button class="btn btn-danger btn-small" onclick="deleteMusica(${m.id})">Deletar</button></td></tr>`).join('')}</tbody></table></div>`;
+            } else if (tab === 'capa') {
+                container.innerHTML = `<div class="table-wrapper"><table><thead><tr><th>Música</th><th>Status Lançamento</th><th>Capa</th><th>Materiais</th><th>Ações</th></tr></thead><tbody>${state.musicas.map(m => `<tr><td><strong>${m.nome}</strong></td><td><span class="status-badge status-${m.status}">${getStatusLabel(m.status)}</span></td><td><span class="status-badge status-${m.capaStatus}">${getCapaLabel(m.capaStatus)}</span></td><td><span class="status-badge status-${m.materiaisStatus}">${getMateriaisLabel(m.materiaisStatus)}</span></td><td><button class="btn btn-primary btn-small" onclick="editMusica(${m.id})">Editar</button></td></tr>`).join('')}</tbody></table></div>`;
+            }
+        }
+
+        function toggleMusicaFields() {
+            const status = document.getElementById('mus-status').value;
+            document.getElementById('mus-link-group').style.display = status === 'concluido' ? 'block' : 'none';
+        }
+
+        function saveMusica(evt) {
+            evt.preventDefault();
+            const nome = document.getElementById('mus-nome').value;
+            const descricao = document.getElementById('mus-desc').value;
+            const status = document.getElementById('mus-status').value;
+            const link = document.getElementById('mus-link').value;
+            const capaStatus = document.getElementById('capa-status').value;
+            const materiaisStatus = document.getElementById('materiais-status').value;
+
+            if (state.editingId) {
+                const musica = state.musicas.find(m => m.id === state.editingId);
+                musica.nome = nome; musica.descricao = descricao; musica.status = status; musica.link = link; musica.capaStatus = capaStatus; musica.materiaisStatus = materiaisStatus;
+            } else {
+                state.musicas.push({id: Date.now(), nome, descricao, status, link, capaStatus, materiaisStatus, data: new Date().toLocaleDateString('pt-BR')});
+            }
+
+            localStorage.setItem('musicas', JSON.stringify(state.musicas));
+            closeModal(null, 'modal-musica');
+            renderMusicasTab(state.currentMusicaTab);
+        }
+
+        function editMusica(id) {
+            state.editingId = id;
+            const musica = state.musicas.find(m => m.id === id);
+            document.getElementById('modal-musica-title').textContent = 'Editar Música';
+            document.getElementById('mus-nome').value = musica.nome;
+            document.getElementById('mus-desc').value = musica.descricao;
+            document.getElementById('mus-status').value = musica.status;
+            document.getElementById('mus-link').value = musica.link || '';
+            document.getElementById('capa-status').value = musica.capaStatus || '';
+            document.getElementById('materiais-status').value = musica.materiaisStatus || '';
+            toggleMusicaFields();
+            document.getElementById('modal-musica').classList.add('active');
+        }
+
+        function deleteMusica(id) {
+            if (confirm('Deletar esta música?')) {
+                state.musicas = state.musicas.filter(m => m.id !== id);
+                localStorage.setItem('musicas', JSON.stringify(state.musicas));
+                renderMusicasTab(state.currentMusicaTab);
+            }
+        }
+
+        function getCapaLabel(status) {
+            const labels = {'nao-iniciado': '⭕ Não Iniciado', 'em-progresso': '🔄 Em Progresso', 'concluido': '✓ Concluído'};
+            return labels[status] || '-';
+        }
+
+        function getMateriaisLabel(status) {
+            const labels = {'nao-iniciado': '⭕ Não Iniciado', 'em-progresso': '🔄 Em Progresso', 'concluido': '✓ Concluído'};
+            return labels[status] || '-';
+        }
+
+        function getDesignLabel(status) {
+            const labels = {'nao-iniciado': '⭕ Não Iniciado', 'em-progresso': '🔄 Em Progresso', 'concluido': '✓ Concluído'};
+            return labels[status] || '-';
+        }
+
+        function getVideoLabel(status) {
+            const labels = {'nao-iniciado': '⭕ Não Iniciado', 'em-progresso': '🔄 Em Progresso', 'concluido': '✓ Concluído'};
+            return labels[status] || '-';
+        }
+
+        function prevMonth() {
+            state.currentMonth.setMonth(state.currentMonth.getMonth() - 1);
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            state.currentMonth.setMonth(state.currentMonth.getMonth() + 1);
+            renderCalendar();
+        }
+
+        function todayMonth() {
+            state.currentMonth = new Date();
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const year = state.currentMonth.getFullYear();
+            const month = state.currentMonth.getMonth();
+
+            const monthName = state.currentMonth.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+            document.getElementById('calendar-month').textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const prevLastDay = new Date(year, month, 0);
+
+            const grid = document.getElementById('calendar-grid');
+            let html = '';
+
+            // Dias do mês anterior
+            for (let i = firstDay.getDay() - 1; i >= 0; i--) {
+                const day = prevLastDay.getDate() - i;
+                html += `<div class="day-cell other-month"><div class="day-number">${day}</div></div>`;
+            }
+
+            // Dias do mês atual
+            const today = new Date();
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const date = new Date(year, month, day);
+                const dateStr = date.toISOString().split('T')[0];
+                const dayEvents = state.eventos.filter(e => e.data === dateStr);
+                const isToday = date.toDateString() === today.toDateString();
+
+                html += `<div class="day-cell ${isToday ? 'today' : ''}" onclick="openEventoModal('${dateStr}')">
+                    <div class="day-number">${day}</div>
+                    ${dayEvents.map((e, i) => i < 2 ? `<div class="day-event">${e.titulo}</div>` : '').join('')}
+                    ${dayEvents.length > 2 ? `<div class="day-event">+${dayEvents.length - 2} mais</div>` : ''}
+                </div>`;
+            }
+
+            // Dias do próximo mês
+            const totalCells = firstDay.getDay() + lastDay.getDate();
+            const remainingDays = 42 - totalCells;
+            for (let day = 1; day <= remainingDays; day++) {
+                html += `<div class="day-cell other-month"><div class="day-number">${day}</div></div>`;
+            }
+
+            grid.innerHTML = html;
+        }
+
+        function openEventoModal(dateStr) {
+            document.getElementById('ev-titulo').value = '';
+            document.getElementById('ev-data').value = dateStr;
+            document.getElementById('ev-desc').value = '';
+            document.getElementById('modal-evento').classList.add('active');
+        }
+
+        function saveEvento(evt) {
+            evt.preventDefault();
+            const titulo = document.getElementById('ev-titulo').value;
+            const data = document.getElementById('ev-data').value;
+            const descricao = document.getElementById('ev-desc').value;
+            state.eventos.push({id: Date.now(), titulo, data, descricao});
+            localStorage.setItem('eventos', JSON.stringify(state.eventos));
+            closeModal(null, 'modal-evento');
+            renderCalendar();
+        }
+
+        function getStatusLabel(status) {
+            const labels = {'concluido': '✓ Concluído', 'pendente': '⏳ Pendente', 'rascunho': '📝 Rascunho', 'fazendo': '⚙️ Fazendo'};
+            return labels[status] || status;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+        });
+    </script>
+</body>
+</html>
