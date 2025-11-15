@@ -36,6 +36,7 @@
         html, body {
             height: 100%;
             width: 100%;
+            overflow: hidden;
         }
 
         body {
@@ -46,14 +47,17 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             transition: background 0.6s ease;
+            font-size: 16px;
         }
 
         .app-container {
             display: flex;
             height: 100vh;
+            width: 100vw;
             overflow: hidden;
             gap: 18px;
             padding: 18px;
+            box-sizing: border-box;
         }
 
         /* SIDEBAR */
@@ -160,6 +164,8 @@
             text-decoration: none;
             color: white;
             box-shadow: 0 8px 24px rgba(12,18,35,0.45);
+            white-space: nowrap;
+            min-width: fit-content;
         }
 
         .btn-primary {
@@ -200,7 +206,9 @@
         .pages-container {
             flex: 1;
             overflow-y: auto;
-            padding: 30px 40px;
+            overflow-x: hidden;
+            padding: 20px 30px;
+            min-width: 0;
         }
 
         .page {
@@ -239,15 +247,16 @@
         .modal-dialog {
             background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
             border-radius: 14px;
-            width: 92%;
-            max-width: 560px;
+            width: 90vw;
+            max-width: 520px;
             box-shadow: 0 30px 60px rgba(2,6,23,0.5);
             padding: 0;
-            max-height: 86vh;
+            max-height: 90vh;
             overflow-y: auto;
             transform: translateY(8px) scale(0.995);
             transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 220ms ease;
             opacity: 0;
+            -webkit-overflow-scrolling: touch;
         }
 
         .modal-overlay.active .modal-dialog {
@@ -317,12 +326,17 @@
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 12px;
+            padding: 11px 12px;
             border: 1px solid var(--border);
             border-radius: 8px;
             font-family: inherit;
             font-size: 14px;
             transition: all 0.3s ease;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: rgba(255,255,255,0.06);
+            color: var(--text-primary);
         }
 
         .form-group input:focus,
@@ -352,10 +366,12 @@
             gap: 10px;
             margin-bottom: 25px;
             flex-wrap: wrap;
+            overflow-x: auto;
+            padding-bottom: 8px;
         }
 
         .filter-btn {
-            padding: 10px 18px;
+            padding: 10px 16px;
             background: white;
             border: 2px solid var(--border);
             border-radius: 8px;
@@ -364,6 +380,8 @@
             font-size: 13px;
             transition: all 0.3s ease;
             color: var(--text-secondary);
+            flex-shrink: 0;
+            white-space: nowrap;
         }
 
         .filter-btn:hover {
@@ -380,20 +398,22 @@
         /* CARDS */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 18px;
             margin-bottom: 30px;
         }
 
         .card {
             background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
             border-radius: 14px;
-            padding: 20px;
+            padding: 18px;
             box-shadow: 0 10px 30px rgba(2,6,23,0.5);
             border: 1px solid rgba(255,255,255,0.04);
             transition: transform 0.24s cubic-bezier(.2,.9,.3,1), box-shadow 0.24s ease;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .card::before {
@@ -494,10 +514,13 @@
         .card-actions {
             display: flex;
             gap: 8px;
+            margin-top: auto;
         }
 
         .card-actions button {
             flex: 1;
+            font-size: 11px;
+            padding: 8px 12px;
         }
 
         .empty-state {
@@ -522,29 +545,33 @@
             background: white;
             border-radius: 12px;
             border: 1px solid var(--border);
-            overflow: hidden;
+            overflow: auto;
             box-shadow: var(--shadow-sm);
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 500px;
         }
 
         th {
             background: var(--bg-light);
-            padding: 16px;
+            padding: 14px 12px;
             text-align: left;
             font-weight: 700;
             color: var(--text-primary);
             border-bottom: 1px solid var(--border);
-            font-size: 13px;
+            font-size: 12px;
+            white-space: nowrap;
         }
 
         td {
-            padding: 16px;
+            padding: 12px;
             border-bottom: 1px solid var(--border);
-            font-size: 14px;
+            font-size: 13px;
+            word-break: break-word;
         }
 
         tr:hover {
@@ -560,6 +587,9 @@
             box-shadow: 0 12px 30px rgba(2,6,23,0.5);
             color: var(--text-primary);
             backdrop-filter: blur(6px);
+            overflow: visible;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .calendar-header {
@@ -619,17 +649,20 @@
         }
 
         .day-cell {
-            aspect-ratio: 1;
+            aspect-ratio: auto;
             border: 1px solid rgba(255,255,255,0.04);
             border-radius: 8px;
-            padding: 10px;
+            padding: 8px;
             cursor: pointer;
             transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
             display: flex;
             flex-direction: column;
             background: rgba(255,255,255,0.02);
-            min-height: 100px;
+            min-height: 110px;
+            height: auto;
             color: var(--text-primary);
+            box-sizing: border-box;
+            overflow: visible;
         }
 
         .day-cell:hover {
@@ -715,30 +748,665 @@
             background: #94a3b8;
         }
 
+        @media (max-width: 1024px) {
+            .app-container {
+                gap: 12px;
+                padding: 12px;
+            }
+            .sidebar {
+                width: 280px;
+                padding: 18px 14px;
+            }
+            .pages-container {
+                padding: 16px 20px;
+            }
+            .top-bar {
+                padding: 14px 20px;
+            }
+        }
+
         @media (max-width: 768px) {
             .app-container {
                 flex-direction: column;
+                gap: 0;
+                padding: 0;
+                height: auto;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
             }
 
             .sidebar {
                 width: 100%;
-                padding: 15px;
+                padding: 12px 14px;
+                margin: 0;
+                border-radius: 0;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                z-index: 50;
+                min-height: auto;
+                gap: 6px;
+            }
+
+            .sidebar-brand {
+                font-size: 16px;
+                padding: 8px 10px;
+                margin-bottom: 4px;
+                gap: 8px;
+            }
+
+            .sidebar-brand span:last-child {
+                display: none;
+            }
+
+            .sidebar-menu {
+                display: flex;
+                flex-direction: row;
+                gap: 4px;
+                overflow-x: auto;
+                padding-bottom: 6px;
+            }
+
+            .menu-item {
+                padding: 8px 10px;
+                font-size: 12px;
+                gap: 6px;
+                flex: 1;
+                min-width: 80px;
+                text-align: center;
+                flex-direction: column;
+                border-left: none;
+                border-top: 2px solid transparent;
+            }
+
+            .menu-item.active {
+                border-left: none;
+                border-top-color: rgba(255,255,255,0.6);
+            }
+
+            .menu-item-icon {
+                font-size: 18px;
+                margin: 0;
+            }
+
+            .menu-item:hover {
+                transform: none;
+            }
+
+            .menu-item span:nth-child(2) {
+                display: none;
+            }
+
+            .main-container {
+                width: 100%;
+                height: auto;
+                padding: 0;
+                flex: none;
             }
 
             .top-bar {
-                padding: 15px 20px;
+                padding: 10px 12px;
+                border-bottom: none;
+                border-top: 1px solid rgba(255,255,255,0.03);
+                gap: 10px;
+            }
+
+            .top-bar h1 {
+                font-size: 20px;
+                margin: 0;
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 12px;
+                gap: 6px;
+            }
+
+            .btn span:first-child {
+                margin-right: -4px;
             }
 
             .pages-container {
-                padding: 15px 20px;
+                padding: 12px 10px;
+                height: auto;
+                overflow: visible;
+            }
+
+            .filter-bar {
+                gap: 6px;
+                margin-bottom: 15px;
+                padding-bottom: 6px;
+            }
+
+            .filter-btn {
+                padding: 8px 12px;
+                font-size: 11px;
             }
 
             .cards-grid {
                 grid-template-columns: 1fr;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+
+            .card {
+                padding: 12px;
+                border-radius: 10px;
+            }
+
+            .card-title {
+                font-size: 15px;
+                margin-bottom: 6px;
+            }
+
+            .card-desc {
+                font-size: 12px;
+                margin-bottom: 10px;
+            }
+
+            .card-status {
+                gap: 4px;
+                margin-bottom: 10px;
+                flex-wrap: wrap;
+            }
+
+            .status-badge {
+                padding: 4px 8px;
+                font-size: 10px;
+            }
+
+            .card-link {
+                font-size: 10px;
+                padding: 6px;
+                margin-bottom: 10px;
+            }
+
+            .card-actions {
+                gap: 6px;
+            }
+
+            .card-actions button {
+                font-size: 10px;
+                padding: 6px 8px;
+            }
+
+            .empty-state {
+                padding: 40px 15px;
+            }
+
+            .empty-icon {
+                font-size: 48px;
+                margin-bottom: 15px;
+            }
+
+            .empty-state h3 {
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+
+            .table-wrapper {
+                border-radius: 8px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin-bottom: 20px;
+            }
+
+            table {
+                min-width: 400px;
+                font-size: 11px;
+            }
+
+            th {
+                padding: 8px 6px;
+                font-size: 10px;
+            }
+
+            td {
+                padding: 6px;
+                font-size: 11px;
+            }
+
+            .tab-buttons {
+                gap: 6px;
+                margin-bottom: 15px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 6px;
+            }
+
+            .tab-btn {
+                padding: 8px 12px;
+                font-size: 11px;
+                flex-shrink: 0;
             }
 
             .modal-dialog {
-                width: 95%;
+                width: 95vw;
+                max-width: 95vw;
+                max-height: 85vh;
+                border-radius: 12px;
+            }
+
+            .modal-header {
+                padding: 14px 12px;
+                gap: 8px;
+            }
+
+            .modal-header h2 {
+                font-size: 16px;
+            }
+
+            .close-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 20px;
+            }
+
+            .modal-body {
+                padding: 14px 12px;
+            }
+
+            .modal-footer {
+                padding: 10px 12px;
+                gap: 8px;
+            }
+
+            .form-group {
+                margin-bottom: 14px;
+            }
+
+            .form-group label {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                font-size: 14px;
+                padding: 10px;
+                border-radius: 6px;
+            }
+
+            .form-group textarea {
+                min-height: 100px;
+                resize: vertical;
+            }
+
+            .calendar-wrapper {
+                padding: 12px;
+                border-radius: 8px;
+                overflow: visible;
+                width: 100%;
+            }
+
+            .calendar-header {
+                margin-bottom: 12px;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .calendar-header h2 {
+                font-size: 16px;
+                flex: 1;
+                min-width: 150px;
+            }
+
+            .calendar-nav {
+                gap: 4px;
+            }
+
+            .calendar-nav button {
+                padding: 6px 8px;
+                font-size: 10px;
+                border-radius: 6px;
+            }
+
+            .weekdays {
+                gap: 4px;
+                margin-bottom: 8px;
+            }
+
+            .weekday {
+                font-size: 10px;
+                padding: 4px 2px;
+                font-weight: 600;
+            }
+
+            .days-grid {
+                gap: 4px;
+                overflow: visible;
+            }
+
+            .day-cell {
+                min-height: auto;
+                padding: 4px;
+                border-radius: 6px;
+                aspect-ratio: auto;
+                overflow: visible;
+            }
+
+            .day-number {
+                font-size: 11px;
+                margin-bottom: 2px;
+                font-weight: 700;
+            }
+
+            .day-event {
+                font-size: 9px;
+                padding: 3px 4px;
+                border-radius: 4px;
+                margin-top: 2px;
+            }
+
+            .day-events-list {
+                max-height: none;
+                gap: 1px;
+                overflow: visible;
+            }
+
+            .footer-signature {
+                font-size: 9px;
+                bottom: 8px;
+                right: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                padding: 8px 6px;
+            }
+
+            .sidebar-brand {
+                font-size: 14px;
+                padding: 6px 8px;
+                margin-bottom: 2px;
+            }
+
+            .sidebar-menu {
+                gap: 2px;
+                padding-bottom: 4px;
+            }
+
+            .menu-item {
+                padding: 6px 4px;
+                font-size: 10px;
+                min-width: 60px;
+            }
+
+            .menu-item-icon {
+                font-size: 16px;
+            }
+
+            .top-bar {
+                padding: 8px 8px;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .top-bar h1 {
+                font-size: 16px;
+                flex: 1;
+                min-width: 200px;
+            }
+
+            .btn {
+                padding: 6px 10px;
+                font-size: 11px;
+                gap: 4px;
+            }
+
+            .pages-container {
+                padding: 8px 6px;
+            }
+
+            .filter-bar {
+                gap: 4px;
+                margin-bottom: 12px;
+            }
+
+            .filter-btn {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+
+            .cards-grid {
+                gap: 10px;
+            }
+
+            .card {
+                padding: 10px;
+            }
+
+            .card-title {
+                font-size: 14px;
+            }
+
+            .card-desc {
+                font-size: 11px;
+            }
+
+            .status-badge {
+                padding: 3px 6px;
+                font-size: 9px;
+            }
+
+            .card-link {
+                font-size: 9px;
+                padding: 4px;
+            }
+
+            .card-actions button {
+                font-size: 9px;
+                padding: 5px 6px;
+            }
+
+            .table-wrapper {
+                border-radius: 6px;
+            }
+
+            table {
+                min-width: 340px;
+                font-size: 10px;
+            }
+
+            th {
+                padding: 6px 4px;
+                font-size: 9px;
+            }
+
+            td {
+                padding: 5px 4px;
+                font-size: 10px;
+            }
+
+            .tab-btn {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+
+            .modal-dialog {
+                width: 100vw;
+                max-width: 100vw;
+                max-height: 90vh;
+                border-radius: 8px 8px 0 0;
+            }
+
+            .modal-header {
+                padding: 10px 8px;
+            }
+
+            .modal-header h2 {
+                font-size: 14px;
+            }
+
+            .close-btn {
+                width: 24px;
+                height: 24px;
+                font-size: 18px;
+            }
+
+            .modal-body {
+                padding: 10px 8px;
+            }
+
+            .modal-footer {
+                padding: 8px;
+                gap: 6px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            .form-group label {
+                font-size: 11px;
+            }
+
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .calendar-wrapper {
+                padding: 8px;
+                overflow: visible;
+                width: 100%;
+            }
+
+            .calendar-header h2 {
+                font-size: 14px;
+            }
+
+            .calendar-nav button {
+                padding: 4px 6px;
+                font-size: 9px;
+            }
+
+            .weekday {
+                font-size: 9px;
+            }
+
+            .day-cell {
+                min-height: auto;
+                padding: 3px;
+                aspect-ratio: auto;
+                overflow: visible;
+            }
+
+            .day-number {
+                font-size: 10px;
+            }
+
+            .day-event {
+                font-size: 8px;
+                padding: 2px 3px;
+            }
+
+            .day-events-list {
+                max-height: none;
+                overflow: visible;
+            }
+
+            .footer-signature {
+                font-size: 8px;
+                bottom: 4px;
+                right: 4px;
+                line-height: 1.3;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .sidebar {
+                padding: 6px 4px;
+            }
+
+            .sidebar-brand {
+                font-size: 12px;
+                padding: 4px 6px;
+            }
+
+            .menu-item {
+                padding: 4px 2px;
+                font-size: 9px;
+                min-width: 50px;
+            }
+
+            .menu-item-icon {
+                font-size: 14px;
+            }
+
+            .top-bar h1 {
+                font-size: 14px;
+            }
+
+            .btn {
+                padding: 5px 8px;
+                font-size: 10px;
+            }
+
+            .pages-container {
+                padding: 6px 4px;
+            }
+
+            .filter-btn {
+                padding: 5px 8px;
+                font-size: 9px;
+            }
+
+            .card {
+                padding: 8px;
+            }
+
+            .card-title {
+                font-size: 13px;
+            }
+
+            .card-desc {
+                font-size: 10px;
+            }
+
+            .status-badge {
+                padding: 2px 5px;
+                font-size: 8px;
+            }
+
+            .card-actions button {
+                font-size: 8px;
+                padding: 4px;
+            }
+
+            table {
+                min-width: 320px;
+                font-size: 9px;
+            }
+
+            th, td {
+                padding: 4px 3px;
+                font-size: 9px;
+            }
+
+            .modal-header h2 {
+                font-size: 13px;
+            }
+
+            .form-group label {
+                font-size: 10px;
+            }
+
+            .calendar-header h2 {
+                font-size: 12px;
+            }
+
+            .day-cell {
+                min-height: auto;
+                aspect-ratio: auto;
+                overflow: visible;
+            }
+
+            .day-event {
+                font-size: 7px;
+                padding: 1px 2px;
             }
         }
 
@@ -762,6 +1430,44 @@
         .footer-signature a:hover {
             color: var(--primary);
             text-decoration: underline;
+        }
+
+        /* Plataforma select visibility (cores mais visíveis) */
+        #post-plataforma, #mus-plataforma {
+            color: #071026; /* texto escuro para contraste */
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.06) !important;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        #post-plataforma option, #mus-plataforma option {
+            color: #071026;
+            background: #ffffff;
+            padding: 8px;
+        }
+
+        /* Select com suporte melhor em mobile */
+        select {
+            cursor: pointer;
+        }
+
+        select::-webkit-outer-spin-button,
+        select::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Adiciona rolagem para lista de eventos do dia */
+        .day-events-list {
+            max-height: none;
+            overflow-y: visible;
+            margin-top: 2px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            -webkit-overflow-scrolling: touch;
+            flex: 1;
+            width: 100%;
         }
     </style>
 </head>
@@ -805,7 +1511,7 @@
                 <!-- PAGE: POSTAGENS -->
                 <div id="page-postagens" class="page active">
                     <div class="filter-bar" id="filter-postagens">
-                        <button class="filter-btn active" onclick="filterPostagens('all')">Todos</button>
+                        <button class="filter-btn active" onclick="filterPostagens('all')">Todas plataformas</button>
                         <button class="filter-btn" onclick="filterPostagens('concluido')">✓ Concluído</button>
                         <button class="filter-btn" onclick="filterPostagens('pendente')">⏳ Pendente</button>
                         <button class="filter-btn" onclick="filterPostagens('rascunho')">📝 Rascunho</button>
@@ -874,6 +1580,10 @@
                         <textarea id="post-desc" required></textarea>
                     </div>
                     <div class="form-group">
+                        <label for="post-date">Data de Publicação</label>
+                        <input type="date" id="post-date">
+                    </div>
+                    <div class="form-group">
                         <label for="post-status">Status</label>
                         <select id="post-status" required onchange="togglePostLink()">
                             <option value="">Selecione...</option>
@@ -881,6 +1591,16 @@
                             <option value="pendente">⏳ Pendente</option>
                             <option value="fazendo">⚙️ Fazendo</option>
                             <option value="concluido">✓ Concluído</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-plataforma">Plataforma</label>
+                        <select id="post-plataforma">
+                            <option value="">Selecione...</option>
+                            <option value="instagram">📸 Instagram</option>
+                            <option value="tiktok">🎵 TikTok</option>
+                            <option value="youtube">▶️ YouTube</option>
+                            <option value="outros">Todas plataformas</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -945,6 +1665,23 @@
                     <div class="form-group" id="mus-link-group" style="display:none;">
                         <label for="mus-link">Link da Música</label>
                         <input type="url" id="mus-link" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label for="mus-plataforma">Plataforma</label>
+                        <select id="mus-plataforma">
+                            <option value="">Selecione...</option>
+                            <option value="spotify">🎧 Spotify</option>
+                            <option value="applemusic">🎵 Apple Music</option>
+                            <option value="youtubemusic">▶️ YouTube Music</option>
+                            <option value="deezer">🎶 Deezer</option>
+                            <option value="soundcloud">☁️ SoundCloud</option>
+                            <option value="suamusica">🎼 Sua Música</option>
+                            <option value="outros">Todas plataformas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mus-release-date">Data de Lançamento</label>
+                        <input type="date" id="mus-release-date">
                     </div>
                     <div class="form-group">
                         <label for="capa-status">Status da Capa</label>
@@ -1079,10 +1816,14 @@
             }
             grid.innerHTML = posts.map(post => `
                 <div class="card">
-                    <div class="card-title">${post.nome}</div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                        <div class="card-title">${post.nome}</div>
+                        <div style="font-size:12px;color:var(--text-secondary);">${post.postDate || post.data || '-'}</div>
+                    </div>
                     <div class="card-desc">${post.descricao}</div>
                     <div class="card-status">
                         <span class="status-badge status-${post.status}">${getStatusLabel(post.status)}</span>
+                        ${post.plataforma ? `<span class="status-badge" style="background: rgba(99,102,241,0.2); color: var(--primary);">${getPlatformaLabel(post.plataforma)}</span>` : ''}
                         <span style="width:8px"></span>
                         <span class="status-badge status-${post.designStatus || 'nao-iniciado'}">${getDesignLabel(post.designStatus)}</span>
                         <span style="width:8px"></span>
@@ -1108,20 +1849,23 @@
             const descricao = document.getElementById('post-desc').value;
             const status = document.getElementById('post-status').value;
             const link = document.getElementById('post-link').value;
+            const plataforma = document.getElementById('post-plataforma').value;
+            const postDate = document.getElementById('post-date').value || '';
             const designStatus = document.getElementById('post-design-status').value || 'nao-iniciado';
             const videoStatus = document.getElementById('post-video-status').value || 'nao-iniciado';
 
             if (state.editingId) {
                 const post = state.postagens.find(p => p.id === state.editingId);
-                post.nome = nome; post.descricao = descricao; post.status = status; post.link = link;
+                post.nome = nome; post.descricao = descricao; post.status = status; post.link = link; post.plataforma = plataforma; post.postDate = postDate;
                 post.designStatus = designStatus; post.videoStatus = videoStatus;
             } else {
-                state.postagens.push({id: Date.now(), nome, descricao, status, link, designStatus, videoStatus, data: new Date().toLocaleDateString('pt-BR')});
+                state.postagens.push({id: Date.now(), nome, descricao, status, link, plataforma, postDate, designStatus, videoStatus, data: new Date().toLocaleDateString('pt-BR')});
             }
 
             localStorage.setItem('postagens', JSON.stringify(state.postagens));
             closeModal(null, 'modal-postagem');
             renderPostagens();
+            renderCalendar();
         }
 
         function editPostagem(id) {
@@ -1132,10 +1876,12 @@
             document.getElementById('post-desc').value = post.descricao;
             document.getElementById('post-status').value = post.status;
             document.getElementById('post-link').value = post.link || '';
+            document.getElementById('post-plataforma').value = post.plataforma || '';
+            document.getElementById('post-date').value = post.postDate || '';
             document.getElementById('post-design-status').value = post.designStatus || '';
             document.getElementById('post-video-status').value = post.videoStatus || '';
             togglePostLink();
-            document.getElementById('modal-postagem').classList.add('active');
+            document.getElementById('modal_postagem').classList.add('active');
         }
 
         function deletePostagem(id) {
@@ -1143,6 +1889,7 @@
                 state.postagens = state.postagens.filter(p => p.id !== id);
                 localStorage.setItem('postagens', JSON.stringify(state.postagens));
                 renderPostagens();
+                renderCalendar();
             }
         }
 
@@ -1160,9 +1907,9 @@
                 return;
             }
             if (tab === 'status') {
-                container.innerHTML = `<div class="table-wrapper"><table><thead><tr><th>Música</th><th>Descrição</th><th>Status</th><th>Link</th><th>Ações</th></tr></thead><tbody>${state.musicas.map(m => `<tr><td><strong>${m.nome}</strong></td><td>${m.descricao.substring(0, 40)}...</td><td><span class="status-badge status-${m.status}">${getStatusLabel(m.status)}</span></td><td>${m.link ? `<a href="${m.link}" target="_blank">🔗</a>` : '-'}</td><td><button class="btn btn-primary btn-small" onclick="editMusica(${m.id})">Editar</button><button class="btn btn-danger btn-small" onclick="deleteMusica(${m.id})">Deletar</button></td></tr>`).join('')}</tbody></table></div>`;
+                container.innerHTML = `<div class="table-wrapper"><table><thead><tr><th>Música</th><th>Descrição</th><th>Plataforma</th><th>Data Lançamento</th><th>Status</th><th>Link</th><th>Ações</th></tr></thead><tbody>${state.musicas.map(m => `<tr><td><strong>${m.nome}</strong></td><td>${m.descricao.substring(0, 40)}...</td><td>${m.plataforma ? `<span class="status-badge" style="background: rgba(99,102,241,0.12); color: var(--primary);">${getPlatformaLabel(m.plataforma)}</span>` : '-'}</td><td>${m.releaseDate ? m.releaseDate : '-'}</td><td><span class="status-badge status-${m.status}">${getStatusLabel(m.status)}</span></td><td>${m.link ? `<a href="${m.link}" target="_blank">🔗</a>` : '-'}</td><td><button class="btn btn-primary btn-small" onclick="editMusica(${m.id})">Editar</button><button class="btn btn-danger btn-small" onclick="deleteMusica(${m.id})">Deletar</button></td></tr>`).join('')}</tbody></table></div>`;
             } else if (tab === 'capa') {
-                container.innerHTML = `<div class="table-wrapper"><table><thead><tr><th>Música</th><th>Status Lançamento</th><th>Capa</th><th>Materiais</th><th>Ações</th></tr></thead><tbody>${state.musicas.map(m => `<tr><td><strong>${m.nome}</strong></td><td><span class="status-badge status-${m.status}">${getStatusLabel(m.status)}</span></td><td><span class="status-badge status-${m.capaStatus}">${getCapaLabel(m.capaStatus)}</span></td><td><span class="status-badge status-${m.materiaisStatus}">${getMateriaisLabel(m.materiaisStatus)}</span></td><td><button class="btn btn-primary btn-small" onclick="editMusica(${m.id})">Editar</button></td></tr>`).join('')}</tbody></table></div>`;
+                container.innerHTML = `<div class="table-wrapper"><table><thead><tr><th>Música</th><th>Plataforma</th><th>Data Lançamento</th><th>Status Lançamento</th><th>Capa</th><th>Materiais</th><th>Ações</th></tr></thead><tbody>${state.musicas.map(m => `<tr><td><strong>${m.nome}</strong></td><td>${m.plataforma ? `<span class="status-badge" style="background: rgba(99,102,241,0.12); color: var(--primary);">${getPlatformaLabel(m.plataforma)}</span>` : '-'}</td><td>${m.releaseDate ? m.releaseDate : '-'}</td><td><span class="status-badge status-${m.status}">${getStatusLabel(m.status)}</span></td><td><span class="status-badge status-${m.capaStatus}">${getCapaLabel(m.capaStatus)}</span></td><td><span class="status-badge status-${m.materiaisStatus}">${getMateriaisLabel(m.materiaisStatus)}</span></td><td><button class="btn btn-primary btn-small" onclick="editMusica(${m.id})">Editar</button></td></tr>`).join('')}</tbody></table></div>`;
             }
         }
 
@@ -1177,19 +1924,22 @@
             const descricao = document.getElementById('mus-desc').value;
             const status = document.getElementById('mus-status').value;
             const link = document.getElementById('mus-link').value;
+            const plataforma = document.getElementById('mus-plataforma').value || '';
+            const releaseDate = document.getElementById('mus-release-date').value || '';
             const capaStatus = document.getElementById('capa-status').value;
             const materiaisStatus = document.getElementById('materiais-status').value;
 
             if (state.editingId) {
                 const musica = state.musicas.find(m => m.id === state.editingId);
-                musica.nome = nome; musica.descricao = descricao; musica.status = status; musica.link = link; musica.capaStatus = capaStatus; musica.materiaisStatus = materiaisStatus;
+                musica.nome = nome; musica.descricao = descricao; musica.status = status; musica.link = link; musica.plataforma = plataforma; musica.releaseDate = releaseDate; musica.capaStatus = capaStatus; musica.materiaisStatus = materiaisStatus;
             } else {
-                state.musicas.push({id: Date.now(), nome, descricao, status, link, capaStatus, materiaisStatus, data: new Date().toLocaleDateString('pt-BR')});
+                state.musicas.push({id: Date.now(), nome, descricao, status, link, plataforma, releaseDate, capaStatus, materiaisStatus, data: new Date().toLocaleDateString('pt-BR')});
             }
 
             localStorage.setItem('musicas', JSON.stringify(state.musicas));
             closeModal(null, 'modal-musica');
             renderMusicasTab(state.currentMusicaTab);
+            renderCalendar();
         }
 
         function editMusica(id) {
@@ -1200,6 +1950,8 @@
             document.getElementById('mus-desc').value = musica.descricao;
             document.getElementById('mus-status').value = musica.status;
             document.getElementById('mus-link').value = musica.link || '';
+            document.getElementById('mus-plataforma').value = musica.plataforma || '';
+            document.getElementById('mus-release-date').value = musica.releaseDate || '';
             document.getElementById('capa-status').value = musica.capaStatus || '';
             document.getElementById('materiais-status').value = musica.materiaisStatus || '';
             toggleMusicaFields();
@@ -1211,6 +1963,7 @@
                 state.musicas = state.musicas.filter(m => m.id !== id);
                 localStorage.setItem('musicas', JSON.stringify(state.musicas));
                 renderMusicasTab(state.currentMusicaTab);
+                renderCalendar();
             }
         }
 
@@ -1232,6 +1985,28 @@
         function getVideoLabel(status) {
             const labels = {'nao-iniciado': '⭕ Não Iniciado', 'em-progresso': '🔄 Em Progresso', 'concluido': '✓ Concluído'};
             return labels[status] || '-';
+        }
+
+        function getPlatformaLabel(plataforma) {
+            const labels = {
+                /* redes sociais (usadas nas postagens) */
+                'instagram': '📸 Instagram',
+                'tiktok': '🎵 TikTok',
+                'youtube': '▶️ YouTube',
+                'twitter': '𝕏 Twitter/X',
+                'facebook': 'f Facebook',
+                'linkedin': 'in LinkedIn',
+                /* plataformas de música (usadas nas músicas) */
+                'spotify': '🎧 Spotify',
+                'applemusic': '🎵 Apple Music',
+                'youtubemusic': '▶️ YouTube Music',
+                'deezer': '🎶 Deezer',
+                'soundcloud': '☁️ SoundCloud',
+                'suamusica': '🎼 Sua Música',
+                /* fallback */
+                'outros': 'Todas plataformas'
+            };
+            return labels[plataforma] || plataforma;
         }
 
         function prevMonth() {
@@ -1274,13 +2049,21 @@
             for (let day = 1; day <= lastDay.getDate(); day++) {
                 const date = new Date(year, month, day);
                 const dateStr = date.toISOString().split('T')[0];
-                const dayEvents = state.eventos.filter(e => e.data === dateStr);
+
+                // Combine eventos, postagens e musicas que possuem data
+                const combinedEvents = [];
+                state.eventos.forEach(e => { if (e && e.data) combinedEvents.push({ titulo: e.titulo, data: e.data, type: 'evento' }); });
+                state.postagens.forEach(p => { if (p && p.postDate) combinedEvents.push({ titulo: `Post: ${p.nome}`, data: p.postDate, type: 'post' }); });
+                state.musicas.forEach(m => { if (m && m.releaseDate) combinedEvents.push({ titulo: `Lançamento: ${m.nome}`, data: m.releaseDate, type: 'musica' }); });
+
+                const dayEvents = combinedEvents.filter(e => e.data === dateStr);
                 const isToday = date.toDateString() === today.toDateString();
 
                 html += `<div class="day-cell ${isToday ? 'today' : ''}" onclick="openEventoModal('${dateStr}')">
                     <div class="day-number">${day}</div>
-                    ${dayEvents.map((e, i) => i < 2 ? `<div class="day-event">${e.titulo}</div>` : '').join('')}
-                    ${dayEvents.length > 2 ? `<div class="day-event">+${dayEvents.length - 2} mais</div>` : ''}
+                    <div class="day-events-list">
+                        ${dayEvents.map(e => `<div class='day-event'>${e.titulo}</div>`).join('')}
+                    </div>
                 </div>`;
             }
 
