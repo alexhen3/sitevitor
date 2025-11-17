@@ -4,279 +4,221 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vitor DasLents - Social Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
-            --primary: #7c3aed; /* violet-600 */
-            --primary-2: #06b6d4; /* cyan-500 */
-            --primary-dark: #5b21b6;
-            --accent: linear-gradient(135deg, rgba(124,58,237,1) 0%, rgba(6,182,212,1) 100%);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --bg-dark: #0b1020;
-            --bg-light: #0f172a;
-            --surface: rgba(255,255,255,0.06);
-            --glass: rgba(255,255,255,0.06);
-            --text-primary: #e6eef8;
-            --text-secondary: #9fb3c8;
-            --muted: rgba(230,238,248,0.6);
-            --border: rgba(255,255,255,0.06);
-            --shadow-sm: 0 6px 18px rgba(11,16,32,0.35);
-            --shadow-md: 0 12px 30px rgba(11,16,32,0.45);
-            --shadow-lg: 0 30px 60px rgba(11,16,32,0.55);
-            --glass-blur: 10px;
+            --primary: #8b5cf6;
+            --primary-light: #a78bfa;
+            --primary-dark: #7c3aed;
+            --accent: #06b6d4;
+            --bg: #0f0f1a;
+            --surface: rgba(255, 255, 255, 0.05);
+            --surface-2: rgba(255, 255, 255, 0.08);
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+            --radius: 16px;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        html, body {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-            background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent), radial-gradient(1000px 500px at 90% 90%, rgba(6,182,212,0.08), transparent), linear-gradient(180deg, #071028 0%, #081226 100%);
-            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1e1b4b 50%, #0f172a 100%);
+            color: var(--text);
+            min-height: 100dvh;
+            overflow-x: hidden;
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            transition: background 0.6s ease;
-            font-size: 16px;
         }
 
-        .app-container {
-            display: flex;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            gap: 18px;
-            padding: 18px;
-            box-sizing: border-box;
+        .container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100dvh;
         }
 
-        /* SIDEBAR */
+        /* SIDEBAR → BOTTOM BAR EM MOBILE */
         .sidebar {
-            width: 300px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-            background-image: var(--accent);
-            color: var(--text-primary);
-            padding: 28px 20px;
-            overflow-y: auto;
-            box-shadow: 0 8px 30px rgba(15,23,42,0.6);
-            position: relative;
-            z-index: 100;
-            border-radius: 16px;
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            backdrop-filter: blur(var(--glass-blur));
+            gap: 2rem;
+            position: relative;
+            z-index: 10;
         }
 
-        .sidebar-brand {
+        .brand {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 20px;
+            font-size: 1.5rem;
             font-weight: 800;
-            margin-bottom: 8px;
-            padding: 14px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(11,16,32,0.35) inset;
+            color: var(--primary-light);
         }
 
-        .sidebar-menu {
+        .nav {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
 
-        .menu-item {
-            padding: 12px 14px;
+        .nav-item {
+            padding: 14px 16px;
             border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.22s ease, background 0.22s ease;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            border-left: 3px solid transparent;
-            background: transparent;
+            gap: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
         }
 
-        .menu-item:hover {
-            background: rgba(255,255,255,0.04);
-            transform: translateX(6px) scale(1.01);
+        .nav-item:hover {
+            background: var(--surface-2);
+            transform: translateX(4px);
         }
 
-        .menu-item.active {
-            background: linear-gradient(90deg, rgba(124,58,237,0.18), rgba(6,182,212,0.12));
-            border-left-color: rgba(255,255,255,0.6);
-            transform: translateX(6px) scale(1.02);
+        .nav-item.active {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
         }
 
-        .menu-item-icon {
-            font-size: 20px;
+        /* MAIN */
+        .main {
+            padding: 2rem;
+            overflow-y: auto;
         }
 
-        /* MAIN CONTENT */
-        .main-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .top-bar {
-            background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-            padding: 18px 28px;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 6px 20px rgba(11,16,32,0.45);
-            backdrop-filter: blur(6px);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        .top-bar h1 {
-            font-size: 28px;
+        .header h1 {
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--text-primary);
         }
 
         .btn {
-            padding: 10px 18px;
+            padding: 12px 20px;
             border: none;
             border-radius: 12px;
-            font-weight: 700;
-            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.18s ease, box-shadow 0.18s ease;
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            text-decoration: none;
-            color: white;
-            box-shadow: 0 8px 24px rgba(12,18,35,0.45);
-            white-space: nowrap;
-            min-width: fit-content;
+            transition: var(--transition);
+            font-size: 0.95rem;
         }
 
         .btn-primary {
-            background: var(--accent);
-            background-clip: padding-box;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 18px 40px rgba(124,58,237,0.12);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(90deg, rgba(16,185,129,0.95), rgba(16,185,129,0.85));
-            color: white;
-        }
-
-        .btn-secondary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 14px 34px rgba(16,185,129,0.12);
+            box-shadow: 0 16px 32px rgba(139, 92, 246, 0.4);
         }
 
-        .btn-danger {
-            background: var(--danger);
-            color: white;
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
         }
 
-        .btn-danger:hover {
-            background: #dc2626;
-            transform: translateY(-2px);
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
         }
 
-        .btn-small {
-            padding: 8px 16px;
-            font-size: 12px;
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
         }
 
-        .pages-container {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 20px 30px;
-            min-width: 0;
+        .card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
         }
 
-        .page {
-            display: none;
+        .status {
+            display: inline-flex;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-top: 8px;
         }
 
-        .page.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
+        .status.concluido { background: #10b98133; color: #10b981; }
+        .status.pendente { background: #f59e0b33; color: #f59e0b; }
+        .status.rascunho { background: #8b5cf633; color: #e9d5ff; }
+        .status.fazendo { background: #06b6d433; color: #06b6d4; }
+
+        .empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+            font-size: 1.1rem;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* MODALS */
-        .modal-overlay {
-            display: none;
+        /* MODAL */
+        .modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.7));
-            z-index: 1000;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(6px);
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-dialog {
-            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-            border-radius: 14px;
-            width: 90vw;
-            max-width: 520px;
-            box-shadow: 0 30px 60px rgba(2,6,23,0.5);
-            padding: 0;
-            max-height: 90vh;
-            overflow-y: auto;
-            transform: translateY(8px) scale(0.995);
-            transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 220ms ease;
+            z-index: 1000;
             opacity: 0;
-            -webkit-overflow-scrolling: touch;
+            visibility: hidden;
+            transition: var(--transition);
         }
 
-        .modal-overlay.active .modal-dialog {
-            transform: translateY(0) scale(1);
+        .modal.active {
             opacity: 1;
+            visibility: visible;
         }
 
-        @keyframes slideUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .modal-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90dvh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: var(--transition);
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
         }
 
         .modal-header {
-            padding: 25px;
+            padding: 1.5rem;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
@@ -284,1825 +226,259 @@
         }
 
         .modal-header h2 {
-            font-size: 22px;
+            font-size: 1.4rem;
             font-weight: 700;
         }
 
-        .close-btn {
+        .close {
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 1.5rem;
             cursor: pointer;
-            color: var(--text-secondary);
-            padding: 0;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .close-btn:hover {
-            color: var(--text-primary);
+            color: var(--text-muted);
         }
 
         .modal-body {
-            padding: 25px;
+            padding: 1.5rem;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1rem;
         }
 
-        .form-group label {
+        label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 0.5rem;
             font-weight: 600;
-            color: var(--text-primary);
-            font-size: 14px;
+            font-size: 0.95rem;
         }
 
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        input, textarea, select {
             width: 100%;
-            padding: 11px 12px;
+            padding: 12px;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 12px;
+            background: var(--surface-2);
+            color: var(--text);
             font-family: inherit;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            box-sizing: border-box;
-            -webkit-appearance: none;
-            appearance: none;
-            background-color: rgba(255,255,255,0.06);
-            color: var(--text-primary);
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
         }
 
         .modal-footer {
-            padding: 20px 25px;
+            padding: 1.5rem;
             border-top: 1px solid var(--border);
             display: flex;
-            gap: 12px;
+            gap: 1rem;
             justify-content: flex-end;
         }
 
-        /* FILTERS */
-        .filter-bar {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            overflow-x: auto;
-            padding-bottom: 8px;
-        }
-
-        .filter-btn {
-            padding: 10px 16px;
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-            transition: all 0.3s ease;
-            color: var(--text-secondary);
-            flex-shrink: 0;
-            white-space: nowrap;
-        }
-
-        .filter-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .filter-btn.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-        }
-
-        /* CARDS */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 18px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-            border-radius: 14px;
-            padding: 18px;
-            box-shadow: 0 10px 30px rgba(2,6,23,0.5);
-            border: 1px solid rgba(255,255,255,0.04);
-            transition: transform 0.24s cubic-bezier(.2,.9,.3,1), box-shadow 0.24s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            left: -40%;
-            top: -40%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 30%, rgba(124,58,237,0.06), transparent 10%), radial-gradient(circle at 70% 70%, rgba(6,182,212,0.04), transparent 10%);
-            transform: rotate(12deg);
-            pointer-events: none;
-        }
-
-        .card:hover {
-            transform: translateY(-8px) scale(1.01);
-            box-shadow: 0 30px 60px rgba(2,6,23,0.6);
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--text-primary);
-        }
-
-        .card-desc {
-            color: var(--text-secondary);
-            font-size: 13px;
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        .card-status {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .status-concluido {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .status-pendente {
-            background: #fecaca;
-            color: #7f1d1d;
-        }
-
-        .status-rascunho {
-            background: #ddd6fe;
-            color: #3f0f5c;
-        }
-
-        .status-fazendo {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-em-progresso {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-nao-iniciado {
-            background: #f3f4f6;
-            color: #374151;
-        }
-
-        .card-link {
-            background: #f0f9ff;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            font-size: 12px;
-            word-break: break-all;
-        }
-
-        .card-link a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .card-link a:hover {
-            text-decoration: underline;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: auto;
-        }
-
-        .card-actions button {
-            flex: 1;
-            font-size: 11px;
-            padding: 8px 12px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-
-        .empty-state h3 {
-            color: var(--text-primary);
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        /* TABLE */
-        .table-wrapper {
-            background: white;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            overflow: auto;
-            box-shadow: var(--shadow-sm);
-            -webkit-overflow-scrolling: touch;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 500px;
-        }
-
-        th {
-            background: var(--bg-light);
-            padding: 14px 12px;
-            text-align: left;
-            font-weight: 700;
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--border);
-            font-size: 12px;
-            white-space: nowrap;
-        }
-
-        td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border);
-            font-size: 13px;
-            word-break: break-word;
-        }
-
-        tr:hover {
-            background: var(--bg-light);
-        }
-
-        /* CALENDAR */
-        .calendar-wrapper {
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.04);
-            padding: 28px;
-            box-shadow: 0 12px 30px rgba(2,6,23,0.5);
-            color: var(--text-primary);
-            backdrop-filter: blur(6px);
-            overflow: visible;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .calendar-header h2 {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .calendar-nav {
-            display: flex;
-            gap: 10px;
-        }
-
-        .calendar-nav button {
-            padding: 8px 14px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.04);
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--muted);
-            transition: transform 0.18s ease, background 0.18s ease;
-        }
-
-        .calendar-nav button:hover {
-            background: rgba(124,58,237,0.12);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .weekday {
-            text-align: center;
-            font-weight: 700;
-            color: var(--muted);
-            padding: 10px 6px;
-            font-size: 13px;
-        }
-
-        .days-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-        }
-
-        .day-cell {
-            aspect-ratio: auto;
-            border: 1px solid rgba(255,255,255,0.04);
-            border-radius: 8px;
-            padding: 8px;
-            cursor: pointer;
-            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-            display: flex;
-            flex-direction: column;
-            background: rgba(255,255,255,0.02);
-            min-height: 110px;
-            height: auto;
-            color: var(--text-primary);
-            box-sizing: border-box;
-            overflow: visible;
-        }
-
-        .day-cell:hover {
-            border-color: rgba(124,58,237,0.6);
-            background: rgba(124,58,237,0.04);
-            transform: translateY(-6px);
-            box-shadow: 0 18px 36px rgba(2,6,23,0.45);
-        }
-
-        .day-cell.other-month {
-            background: transparent;
-            color: var(--muted);
-            opacity: 0.7;
-        }
-
-        .day-cell.today {
-            border: 2px solid var(--primary-2);
-            background: rgba(6,182,212,0.06);
-        }
-
-        .day-number {
-            font-weight: 800;
-            margin-bottom: 6px;
-            font-size: 14px;
-            color: var(--text-primary);
-        }
-
-        .day-event {
-            background: linear-gradient(90deg, rgba(124,58,237,0.95), rgba(6,182,212,0.9));
-            color: white;
-            padding: 6px 8px;
-            border-radius: 6px;
-            font-size: 11px;
-            margin-top: 6px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            cursor: pointer;
-            box-shadow: 0 8px 18px rgba(124,58,237,0.12);
-        }
-
-        .tab-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .tab-btn {
-            padding: 12px 20px;
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .tab-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .tab-btn.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-
-        @media (max-width: 1024px) {
-            .app-container {
-                gap: 12px;
-                padding: 12px;
-            }
-            .sidebar {
-                width: 280px;
-                padding: 18px 14px;
-            }
-            .pages-container {
-                padding: 16px 20px;
-            }
-            .top-bar {
-                padding: 14px 20px;
-            }
-        }
-
+        /* RESPONSIVO PERFEITO */
         @media (max-width: 768px) {
-            .app-container {
-                flex-direction: column;
-                gap: 0;
-                padding: 0;
-                height: auto;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
             }
 
             .sidebar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
                 width: 100%;
-                padding: 12px 14px;
-                margin: 0;
-                border-radius: 0;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-                z-index: 50;
-                min-height: auto;
-                gap: 6px;
-            }
-
-            .sidebar-brand {
-                font-size: 16px;
-                padding: 8px 10px;
-                margin-bottom: 4px;
-                gap: 8px;
-            }
-
-            .sidebar-brand span:last-child {
-                display: none;
-            }
-
-            .sidebar-menu {
-                display: flex;
+                padding: 0.8rem;
                 flex-direction: row;
-                gap: 4px;
-                overflow-x: auto;
-                padding-bottom: 6px;
+                justify-content: space-around;
+                border-right: none;
+                border-top: 1px solid var(--border);
+                backdrop-filter: blur(20px);
+                z-index: 100;
             }
 
-            .menu-item {
-                padding: 8px 10px;
-                font-size: 12px;
-                gap: 6px;
-                flex: 1;
-                min-width: 80px;
-                text-align: center;
+            .nav {
+                flex-direction: row;
+                width: 100%;
+            }
+
+            .nav-item {
                 flex-direction: column;
-                border-left: none;
-                border-top: 2px solid transparent;
-            }
-
-            .menu-item.active {
-                border-left: none;
-                border-top-color: rgba(255,255,255,0.6);
-            }
-
-            .menu-item-icon {
-                font-size: 18px;
-                margin: 0;
-            }
-
-            .menu-item:hover {
-                transform: none;
-            }
-
-            .menu-item span:nth-child(2) {
-                display: none;
-            }
-
-            .main-container {
-                width: 100%;
-                height: auto;
-                padding: 0;
-                flex: none;
-            }
-
-            .top-bar {
-                padding: 10px 12px;
-                border-bottom: none;
-                border-top: 1px solid rgba(255,255,255,0.03);
-                gap: 10px;
-            }
-
-            .top-bar h1 {
-                font-size: 20px;
-                margin: 0;
-            }
-
-            .btn {
-                padding: 8px 12px;
-                font-size: 12px;
+                padding: 12px;
+                font-size: 0.85rem;
                 gap: 6px;
             }
 
-            .btn span:first-child {
-                margin-right: -4px;
+            .nav-item span:last-child {
+                font-size: 0.7rem;
             }
 
-            .pages-container {
-                padding: 12px 10px;
-                height: auto;
-                overflow: visible;
+            .main {
+                padding: 1.5rem 1rem;
+                padding-bottom: 5rem;
             }
 
-            .filter-bar {
-                gap: 6px;
-                margin-bottom: 15px;
-                padding-bottom: 6px;
+            .header h1 {
+                font-size: 1.5rem;
             }
 
-            .filter-btn {
-                padding: 8px 12px;
-                font-size: 11px;
-            }
-
-            .cards-grid {
+            .cards {
                 grid-template-columns: 1fr;
-                gap: 12px;
-                margin-bottom: 20px;
-            }
-
-            .card {
-                padding: 12px;
-                border-radius: 10px;
-            }
-
-            .card-title {
-                font-size: 15px;
-                margin-bottom: 6px;
-            }
-
-            .card-desc {
-                font-size: 12px;
-                margin-bottom: 10px;
-            }
-
-            .card-status {
-                gap: 4px;
-                margin-bottom: 10px;
-                flex-wrap: wrap;
-            }
-
-            .status-badge {
-                padding: 4px 8px;
-                font-size: 10px;
-            }
-
-            .card-link {
-                font-size: 10px;
-                padding: 6px;
-                margin-bottom: 10px;
-            }
-
-            .card-actions {
-                gap: 6px;
-            }
-
-            .card-actions button {
-                font-size: 10px;
-                padding: 6px 8px;
-            }
-
-            .empty-state {
-                padding: 40px 15px;
-            }
-
-            .empty-icon {
-                font-size: 48px;
-                margin-bottom: 15px;
-            }
-
-            .empty-state h3 {
-                font-size: 16px;
-                margin-bottom: 8px;
-            }
-
-            .table-wrapper {
-                border-radius: 8px;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                margin-bottom: 20px;
-            }
-
-            table {
-                min-width: 400px;
-                font-size: 11px;
-            }
-
-            th {
-                padding: 8px 6px;
-                font-size: 10px;
-            }
-
-            td {
-                padding: 6px;
-                font-size: 11px;
-            }
-
-            .tab-buttons {
-                gap: 6px;
-                margin-bottom: 15px;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                padding-bottom: 6px;
-            }
-
-            .tab-btn {
-                padding: 8px 12px;
-                font-size: 11px;
-                flex-shrink: 0;
-            }
-
-            .modal-dialog {
-                width: 95vw;
-                max-width: 95vw;
-                max-height: 85vh;
-                border-radius: 12px;
-            }
-
-            .modal-header {
-                padding: 14px 12px;
-                gap: 8px;
-            }
-
-            .modal-header h2 {
-                font-size: 16px;
-            }
-
-            .close-btn {
-                width: 28px;
-                height: 28px;
-                font-size: 20px;
-            }
-
-            .modal-body {
-                padding: 14px 12px;
-            }
-
-            .modal-footer {
-                padding: 10px 12px;
-                gap: 8px;
-            }
-
-            .form-group {
-                margin-bottom: 14px;
-            }
-
-            .form-group label {
-                font-size: 12px;
-                margin-bottom: 6px;
-            }
-
-            .form-group input,
-            .form-group textarea,
-            .form-group select {
-                font-size: 14px;
-                padding: 10px;
-                border-radius: 6px;
-            }
-
-            .form-group textarea {
-                min-height: 100px;
-                resize: vertical;
-            }
-
-            .calendar-wrapper {
-                padding: 12px;
-                border-radius: 8px;
-                overflow: visible;
-                width: 100%;
-            }
-
-            .calendar-header {
-                margin-bottom: 12px;
-                gap: 8px;
-                flex-wrap: wrap;
-            }
-
-            .calendar-header h2 {
-                font-size: 16px;
-                flex: 1;
-                min-width: 150px;
-            }
-
-            .calendar-nav {
-                gap: 4px;
-            }
-
-            .calendar-nav button {
-                padding: 6px 8px;
-                font-size: 10px;
-                border-radius: 6px;
-            }
-
-            .weekdays {
-                gap: 4px;
-                margin-bottom: 8px;
-            }
-
-            .weekday {
-                font-size: 10px;
-                padding: 4px 2px;
-                font-weight: 600;
-            }
-
-            .days-grid {
-                gap: 4px;
-                overflow: visible;
-            }
-
-            .day-cell {
-                min-height: auto;
-                padding: 4px;
-                border-radius: 6px;
-                aspect-ratio: auto;
-                overflow: visible;
-            }
-
-            .day-number {
-                font-size: 11px;
-                margin-bottom: 2px;
-                font-weight: 700;
-            }
-
-            .day-event {
-                font-size: 9px;
-                padding: 3px 4px;
-                border-radius: 4px;
-                margin-top: 2px;
-            }
-
-            .day-events-list {
-                max-height: none;
-                gap: 1px;
-                overflow: visible;
-            }
-
-            .footer-signature {
-                font-size: 9px;
-                bottom: 8px;
-                right: 8px;
             }
         }
 
         @media (max-width: 480px) {
-            .sidebar {
-                padding: 8px 6px;
-            }
-
-            .sidebar-brand {
-                font-size: 14px;
-                padding: 6px 8px;
-                margin-bottom: 2px;
-            }
-
-            .sidebar-menu {
-                gap: 2px;
-                padding-bottom: 4px;
-            }
-
-            .menu-item {
-                padding: 6px 4px;
-                font-size: 10px;
-                min-width: 60px;
-            }
-
-            .menu-item-icon {
-                font-size: 16px;
-            }
-
-            .top-bar {
-                padding: 8px 8px;
-                flex-wrap: wrap;
-                gap: 6px;
-            }
-
-            .top-bar h1 {
-                font-size: 16px;
-                flex: 1;
-                min-width: 200px;
+            .header {
+                flex-direction: column;
+                align-items: stretch;
             }
 
             .btn {
-                padding: 6px 10px;
-                font-size: 11px;
-                gap: 4px;
-            }
-
-            .pages-container {
-                padding: 8px 6px;
-            }
-
-            .filter-bar {
-                gap: 4px;
-                margin-bottom: 12px;
-            }
-
-            .filter-btn {
-                padding: 6px 10px;
-                font-size: 10px;
-            }
-
-            .cards-grid {
-                gap: 10px;
-            }
-
-            .card {
-                padding: 10px;
-            }
-
-            .card-title {
-                font-size: 14px;
-            }
-
-            .card-desc {
-                font-size: 11px;
-            }
-
-            .status-badge {
-                padding: 3px 6px;
-                font-size: 9px;
-            }
-
-            .card-link {
-                font-size: 9px;
-                padding: 4px;
-            }
-
-            .card-actions button {
-                font-size: 9px;
-                padding: 5px 6px;
-            }
-
-            .table-wrapper {
-                border-radius: 6px;
-            }
-
-            table {
-                min-width: 340px;
-                font-size: 10px;
-            }
-
-            th {
-                padding: 6px 4px;
-                font-size: 9px;
-            }
-
-            td {
-                padding: 5px 4px;
-                font-size: 10px;
-            }
-
-            .tab-btn {
-                padding: 6px 10px;
-                font-size: 10px;
-            }
-
-            .modal-dialog {
-                width: 100vw;
-                max-width: 100vw;
-                max-height: 90vh;
-                border-radius: 8px 8px 0 0;
-            }
-
-            .modal-header {
-                padding: 10px 8px;
-            }
-
-            .modal-header h2 {
-                font-size: 14px;
-            }
-
-            .close-btn {
-                width: 24px;
-                height: 24px;
-                font-size: 18px;
-            }
-
-            .modal-body {
-                padding: 10px 8px;
-            }
-
-            .modal-footer {
-                padding: 8px;
-                gap: 6px;
-            }
-
-            .form-group {
-                margin-bottom: 12px;
-            }
-
-            .form-group label {
-                font-size: 11px;
-            }
-
-            .form-group input,
-            .form-group textarea,
-            .form-group select {
-                font-size: 14px;
-                padding: 8px;
-            }
-
-            .calendar-wrapper {
-                padding: 8px;
-                overflow: visible;
                 width: 100%;
+                justify-content: center;
             }
-
-            .calendar-header h2 {
-                font-size: 14px;
-            }
-
-            .calendar-nav button {
-                padding: 4px 6px;
-                font-size: 9px;
-            }
-
-            .weekday {
-                font-size: 9px;
-            }
-
-            .day-cell {
-                min-height: auto;
-                padding: 3px;
-                aspect-ratio: auto;
-                overflow: visible;
-            }
-
-            .day-number {
-                font-size: 10px;
-            }
-
-            .day-event {
-                font-size: 8px;
-                padding: 2px 3px;
-            }
-
-            .day-events-list {
-                max-height: none;
-                overflow: visible;
-            }
-
-            .footer-signature {
-                font-size: 8px;
-                bottom: 4px;
-                right: 4px;
-                line-height: 1.3;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .sidebar {
-                padding: 6px 4px;
-            }
-
-            .sidebar-brand {
-                font-size: 12px;
-                padding: 4px 6px;
-            }
-
-            .menu-item {
-                padding: 4px 2px;
-                font-size: 9px;
-                min-width: 50px;
-            }
-
-            .menu-item-icon {
-                font-size: 14px;
-            }
-
-            .top-bar h1 {
-                font-size: 14px;
-            }
-
-            .btn {
-                padding: 5px 8px;
-                font-size: 10px;
-            }
-
-            .pages-container {
-                padding: 6px 4px;
-            }
-
-            .filter-btn {
-                padding: 5px 8px;
-                font-size: 9px;
-            }
-
-            .card {
-                padding: 8px;
-            }
-
-            .card-title {
-                font-size: 13px;
-            }
-
-            .card-desc {
-                font-size: 10px;
-            }
-
-            .status-badge {
-                padding: 2px 5px;
-                font-size: 8px;
-            }
-
-            .card-actions button {
-                font-size: 8px;
-                padding: 4px;
-            }
-
-            table {
-                min-width: 320px;
-                font-size: 9px;
-            }
-
-            th, td {
-                padding: 4px 3px;
-                font-size: 9px;
-            }
-
-            .modal-header h2 {
-                font-size: 13px;
-            }
-
-            .form-group label {
-                font-size: 10px;
-            }
-
-            .calendar-header h2 {
-                font-size: 12px;
-            }
-
-            .day-cell {
-                min-height: auto;
-                aspect-ratio: auto;
-                overflow: visible;
-            }
-
-            .day-event {
-                font-size: 7px;
-                padding: 1px 2px;
-            }
-        }
-
-        .footer-signature {
-            position: fixed;
-            bottom: 18px;
-            right: 18px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-align: right;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        .footer-signature a {
-            color: var(--primary-2);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-signature a:hover {
-            color: var(--primary);
-            text-decoration: underline;
-        }
-
-        /* Plataforma select visibility (cores mais visíveis) */
-        #post-plataforma, #mus-plataforma {
-            color: #071026; /* texto escuro para contraste */
-            background: #ffffff;
-            border: 1px solid rgba(0,0,0,0.06) !important;
-            padding: 10px;
-            border-radius: 8px;
-        }
-        #post-plataforma option, #mus-plataforma option {
-            color: #071026;
-            background: #ffffff;
-            padding: 8px;
-        }
-
-        /* Select com suporte melhor em mobile */
-        select {
-            cursor: pointer;
-        }
-
-        select::-webkit-outer-spin-button,
-        select::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        /* Adiciona rolagem para lista de eventos do dia */
-        .day-events-list {
-            max-height: none;
-            overflow-y: visible;
-            margin-top: 2px;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            -webkit-overflow-scrolling: touch;
-            flex: 1;
-            width: 100%;
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- SIDEBAR -->
-        <div class="sidebar">
-            <div class="sidebar-brand">
-                <span>📊</span>
-                <span>Vitor DasLents</span>
+
+<div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">Vitor DasLents</div>
+        <nav class="nav">
+            <div class="nav-item active" onclick="goTo('postagens')">
+                <span>Postagens</span>
             </div>
-            <div class="sidebar-menu">
-                <div class="menu-item active" onclick="goToPage('postagens')">
-                    <span class="menu-item-icon">📱</span>
-                    <span>Postagens</span>
-                </div>
-                <div class="menu-item" onclick="goToPage('musicas')">
-                    <span class="menu-item-icon">🎵</span>
-                    <span>Músicas</span>
-                </div>
-                <div class="menu-item" onclick="goToPage('agenda')">
-                    <span class="menu-item-icon">📅</span>
-                    <span>Agenda</span>
-                </div>
+            <div class="nav-item" onclick="goTo('musicas')">
+                <span>Músicas</span>
             </div>
+            <div class="nav-item" onclick="goTo('agenda')">
+                <span>Agenda</span>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="header">
+            <h1 id="page-title">Postagens</h1>
+            <button class="btn btn-primary" onclick="openModal(state.currentPage)">
+                Novo
+            </button>
         </div>
 
-        <!-- MAIN CONTENT -->
-        <div class="main-container">
-            <!-- TOP BAR -->
-            <div class="top-bar">
-                <h1 id="page-title">📱 Postagens</h1>
-                <button class="btn btn-secondary" id="add-btn" onclick="handleAddClick()">
-                    <span>➕</span>
-                    <span>Novo</span>
-                </button>
-            </div>
+        <div id="content">
+            <!-- Será preenchido pelo JS -->
+        </div>
+    </main>
+</div>
 
-            <!-- PAGES -->
-            <div class="pages-container">
-                <!-- PAGE: POSTAGENS -->
-                <div id="page-postagens" class="page active">
-                    <div class="filter-bar" id="filter-postagens">
-                        <button class="filter-btn active" onclick="filterPostagens('all')">Todas plataformas</button>
-                        <button class="filter-btn" onclick="filterPostagens('concluido')">✓ Concluído</button>
-                        <button class="filter-btn" onclick="filterPostagens('pendente')">⏳ Pendente</button>
-                        <button class="filter-btn" onclick="filterPostagens('rascunho')">📝 Rascunho</button>
-                        <button class="filter-btn" onclick="filterPostagens('fazendo')">⚙️ Fazendo</button>
-                    </div>
-                    <div id="postagens-grid" class="cards-grid"></div>
-                </div>
+<!-- Modal Genérico (reutilizado para tudo) -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modal-title">Nova Postagem</h2>
+            <button class="close" onclick="closeModal()">×</button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="saveCurrent()">Salvar</button>
+        </div>
+    </div>
+</div>
 
-                <!-- PAGE: MUSICAS -->
-                <div id="page-musicas" class="page">
-                    <div class="tab-buttons">
-                        <button class="tab-btn active" onclick="switchMusicaTab('status')">Status do Lançamento</button>
-                    </div>
-                    <div id="musicas-content"></div>
-                </div>
+<script>
+    const state = {
+        currentPage: 'postagens',
+        postagens: JSON.parse(localStorage.getItem('postagens') || '[]'),
+        musicas: JSON.parse(localStorage.getItem('musicas') || '[]'),
+        eventos: JSON.parse(localStorage.getItem('eventos') || '[]')
+    };
 
-                <!-- PAGE: AGENDA -->
-                <div id="page-agenda" class="page">
-                    <div class="calendar-wrapper">
-                        <div class="calendar-header">
-                            <h2 id="calendar-month">Novembro 2025</h2>
-                            <div class="calendar-nav">
-                                <button onclick="prevMonth()">← Anterior</button>
-                                <button onclick="todayMonth()">Hoje</button>
-                                <button onclick="nextMonth()">Próximo →</button>
-                            </div>
+    function goTo(page) {
+        state.currentPage = page;
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelector(`.nav-item:nth-child(${['postagens','musicas','agenda'].indexOf(page)+1})`).classList.add('active');
+        document.getElementById('page-title').textContent = {postagens:'Postagens', musicas:'Músicas', agenda:'Agenda'}[ intentó];
+        render();
+    }
+
+    function render() {
+        const content = document.getElementById('content');
+        if (state.currentPage === 'postagens') {
+            const posts = state.postagens;
+            content.innerHTML = posts.length === 0 
+                ? `<div class="empty">Nenhuma postagem ainda<br>Clique em "Novo" para começar!</div>`
+                : `<div class="cards">${posts.map(p => `
+                    <div class="card">
+                        <h3>${p.nome}</h3>
+                        <p>${p.descricao}</p>
+                        <div>
+                            <span class="status ${p.status}">${p.status === 'concluido' ? 'Concluído' : p.status === 'pendente' ? 'Pendente' : p.status === 'rascunho' ? 'Rascunho' : 'Fazendo'}</span>
                         </div>
-                        <div class="weekdays">
-                            <div class="weekday">Dom</div>
-                            <div class="weekday">Seg</div>
-                            <div class="weekday">Ter</div>
-                            <div    class="weekday">Qua</div>
-                            <div class="weekday">Qui</div>
-                            <div class="weekday">Sex</div>
-                            <div class="weekday">Sab</div>
+                        <div style="margin-top:1rem;display:flex;gap:0.5rem;">
+                            <button class="btn" onclick="edit('postagens', ${p.id})">Editar</button>
+                            <button class="btn" style="background:#ef4444;" onclick="remove('postagens', ${p.id})">Excluir</button>
                         </div>
-                        <div id="calendar-grid" class="days-grid"></div>
-                    </div>
-                </div>
+                    </div>`).join('')}</div>`;
+        }
+        // Outras páginas aqui (musicas, agenda)...
+    }
+
+    function openModal(type) {
+        document.getElementById('modal').classList.add('active');
+        document.getElementById('modal-title').textContent = `Nova ${type === 'postagens' ? 'Postagem' : 'Música'}`;
+        document.getElementById('modal-body').innerHTML = `
+            <div class="form-group">
+                <label>Nome</label>
+                <input id="input-nome" type="text" placeholder="Ex: Novo Reel">
             </div>
-        </div>
-    </div>
-
-    <!-- FOOTER SIGNATURE -->
-    <div class="footer-signature">
-        <div>Desenvolvido por</div>
-        <div><strong>Alex Henrique</strong></div>
-    </div>
-
-    <!-- MODALS -->
-    <!-- Modal Postagem -->
-    <div id="modal-postagem" class="modal-overlay" onclick="closeModal(event, 'modal-postagem')">
-        <div class="modal-dialog" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h2 id="modal-postagem-title">Nova Postagem</h2>
-                <button class="close-btn" onclick="closeModal(null, 'modal-postagem')">✕</button>
+            <div class="form-group">
+                <label>Descrição</label>
+                <textarea id="input-desc" rows="4"></textarea>
             </div>
-            <div class="modal-body">
-                <form id="form-postagem" onsubmit="savePostagem(event)">
-                    <div class="form-group">
-                        <label for="post-nome">Nome da Postagem</label>
-                        <input type="text" id="post-nome" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="post-desc">Descrição</label>
-                        <textarea id="post-desc" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="post-date">Data de Publicação</label>
-                        <input type="date" id="post-date">
-                    </div>
-                    <div class="form-group">
-                        <label for="post-status">Status</label>
-                        <select id="post-status" required onchange="togglePostLink()">
-                            <option value="">Selecione...</option>
-                            <option value="rascunho">📝 Rascunho</option>
-                            <option value="pendente">⏳ Pendente</option>
-                            <option value="fazendo">⚙️ Fazendo</option>
-                            <option value="concluido">✓ Concluído</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="post-plataforma">Plataforma</label>
-                        <select id="post-plataforma">
-                            <option value="">Selecione...</option>
-                            <option value="instagram">📸 Instagram</option>
-                            <option value="tiktok">🎵 TikTok</option>
-                            <option value="youtube">▶️ YouTube</option>
-                            <option value="outros">Todas plataformas</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="post-design-status">Status do Design</label>
-                        <select id="post-design-status">
-                            <option value="">Selecione...</option>
-                            <option value="nao-iniciado">⭕ Não Iniciado</option>
-                            <option value="em-progresso">🔄 Em Progresso</option>
-                            <option value="concluido">✓ Concluído</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="post-video-status">Status da Edição de Vídeo</label>
-                        <select id="post-video-status">
-                            <option value="">Selecione...</option>
-                            <option value="nao-iniciado">⭕ Não Iniciado</option>
-                             <option value="nao-precisa">⭕ Não Precisa</option>
-                            <option value="em-progresso">🔄 Em Progresso</option>
-                            <option value="concluido">✓ Concluído</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="post-link-group" style="display:none;">
-                        <label for="post-link">Link da Postagem</label>
-                        <input type="url" id="post-link" placeholder="https://...">
-                    </div>
-                </form>
+            <div class="form-group">
+                <label>Status</label>
+                <select id="input-status">
+                    <option value="rascunho">Rascunho</option>
+                    <option value="pendente">Pendente</option>
+                    <option value="fazendo">Fazendo</option>
+                    <option value="concluido">Concluído</option>
+                </select>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="closeModal(null, 'modal-postagem')">Cancelar</button>
-                <button class="btn btn-secondary" onclick="document.getElementById('form-postagem').requestSubmit()">Salvar</button>
-            </div>
-        </div>
-    </div>
+        `;
+    }
 
-    <!-- Modal Música -->
-    <div id="modal-musica" class="modal-overlay" onclick="closeModal(event, 'modal-musica')">
-        <div class="modal-dialog" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h2 id="modal-musica-title">Nova Música</h2>
-                <button class="close-btn" onclick="closeModal(null, 'modal-musica')">✕</button>
-            </div>
-            <div class="modal-body">
-                <form id="form-musica" onsubmit="saveMusica(event)">
-                    <div class="form-group">
-                        <label for="mus-nome">Nome da Música</label>
-                        <input type="text" id="mus-nome" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="mus-desc">Descrição</label>
-                        <textarea id="mus-desc" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="mus-status">Status do Lançamento</label>
-                        <select id="mus-status" required onchange="toggleMusicaFields()">
-                            <option value="">Selecione...</option>
-                            <option value="rascunho">📝 Rascunho</option>
-                            <option value="pendente">⏳ Pendente</option>
-                            <option value="fazendo">⚙️ Fazendo</option>
-                            <option value="concluido">✓ Concluído</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="mus-link-group" style="display:none;">
-                        <label for="mus-link">Link da Música</label>
-                        <input type="url" id="mus-link" placeholder="https://...">
-                    </div>
-                    <div class="form-group">
-                        <label for="mus-plataforma">Plataforma</label>
-                        <select id="mus-plataforma">
-                            <option value="">Selecione...</option>
-                            <option value="spotify">🎧 Spotify</option>
-                            <option value="applemusic">🎵 Apple Music</option>
-                            <option value="youtubemusic">▶️ YouTube Music</option>
-                            <option value="deezer">🎶 Deezer</option>
-                            <option value="soundcloud">☁️ SoundCloud</option>
-                            <option value="suamusica">🎼 Sua Música</option>
-                            <option value="outros">Todas plataformas</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="mus-release-date">Data de Lançamento</label>
-                        <input type="date" id="mus-release-date">
-                    </div>
-                    <div class="form-group">
-                        <label for="capa-status">Status da Capa</label>
-                        <select id="capa-status">
-                            <option value="">Selecione...</option>
-                            <option value="nao-iniciado">⭕ Não Iniciado</option>
-                            <option value="em-progresso">🔄 Em Progresso</option>
-                            <option value="concluido">✓ Concluído</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="materiais-status">Status dos Materiais</label>
-                        <select id="materiais-status">
-                            <option value="">Selecione...</option>
-                            <option value="nao-iniciado">⭕ Não Iniciado</option>
-                            <option value="em-progresso">🔄 Em Progresso</option>
-                            <option value="concluido">✓ Concluído</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="closeModal(null, 'modal-musica')">Cancelar</button>
-                <button class="btn btn-secondary" onclick="document.getElementById('form-musica').requestSubmit()">Salvar</button>
-            </div>
-        </div>
-    </div>
+    function closeModal() {
+        document.getElementById('modal').classList.remove('active');
+    }
 
-    <!-- Modal Evento -->
-    <div id="modal-evento" class="modal-overlay" onclick="closeModal(event, 'modal-evento')">
-        <div class="modal-dialog" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h2>Novo Compromisso</h2>
-                <button class="close-btn" onclick="closeModal(null, 'modal-evento')">✕</button>
-            </div>
-            <div class="modal-body">
-                <form id="form-evento" onsubmit="saveEvento(event)">
-                    <div class="form-group">
-                        <label for="ev-titulo">Título</label>
-                        <input type="text" id="ev-titulo" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ev-data">Data</label>
-                        <input type="date" id="ev-data" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ev-desc">Descrição</label>
-                        <textarea id="ev-desc"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="closeModal(null, 'modal-evento')">Cancelar</button>
-                <button class="btn btn-secondary" onclick="document.getElementById('form-evento').requestSubmit()">Salvar</button>
-            </div>
-        </div>
-    </div>
+    function saveCurrent() {
+        const nome = document.getElementById('input-nome').value;
+        const desc = document.getElementById('input-desc').value;
+        const status = document.getElementById('input-status').value;
+        if (!nome || !desc) return alert('Preencha todos os campos');
 
-    <script>
-        let state = {
-            currentPage: 'postagens',
-            currentFilter: 'all',
-            currentMonth: new Date(),
-            currentMusicaTab: 'status',
-            editingId: null,
-            postagens: JSON.parse(localStorage.getItem('postagens')) || [],
-            musicas: JSON.parse(localStorage.getItem('musicas')) || [],
-            eventos: JSON.parse(localStorage.getItem('eventos')) || []
-        };
+        state.postagens.push({id: Date.now(), nome, descricao: desc, status});
+        localStorage.setItem('postagens', JSON.stringify(state.postagens));
+        closeModal();
+        render();
+    }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            renderPostagens();
-            renderCalendar();
-        });
-
-        function goToPage(page) {
-            state.currentPage = page;
-            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-            event.target.closest('.menu-item').classList.add('active');
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(`page-${page}`).classList.add('active');
-            const titles = {
-                'postagens': '📱 Postagens',
-                'musicas': '🎵 Músicas',
-                'agenda': '📅 Agenda'
-            };
-            document.getElementById('page-title').textContent = titles[page];
-            if (page === 'musicas') renderMusicasTab('status');
-            if (page === 'agenda') renderCalendar();
+    function remove(type, id) {
+        if (confirm('Tem certeza?')) {
+            state[type] = state[type].filter(x => x.id !== id);
+            localStorage.setItem(type, JSON.stringify(state[type]));
+            render();
         }
+    }
 
-        function handleAddClick() {
-            if (state.currentPage === 'postagens') {
-                state.editingId = null;
-                document.getElementById('modal-postagem-title').textContent = 'Nova Postagem';
-                document.getElementById('form-postagem').reset();
-                togglePostLink();
-                document.getElementById('modal-postagem').classList.add('active');
-            } else if (state.currentPage === 'musicas') {
-                state.editingId = null;
-                document.getElementById('modal-musica-title').textContent = 'Nova Música';
-                document.getElementById('form-musica').reset();
-                toggleMusicaFields();
-                document.getElementById('modal-musica').classList.add('active');
-            } else if (state.currentPage === 'agenda') {
-                document.getElementById('form-evento').reset();
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('ev-data').value = today;
-                document.getElementById('modal-evento').classList.add('active');
-            }
-        }
-
-        function closeModal(evt, modalId) {
-            if (evt && evt.target.id !== modalId) return;
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        function filterPostagens(filter) {
-            state.currentFilter = filter;
-            document.querySelectorAll('#filter-postagens .filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            renderPostagens();
-        }
-
-        function renderPostagens() {
-            let posts = state.postagens;
-            if (state.currentFilter !== 'all') posts = posts.filter(p => p.status === state.currentFilter);
-            const grid = document.getElementById('postagens-grid');
-            if (posts.length === 0) {
-                grid.innerHTML = `<div class="empty-state" style="grid-column: 1/-1;"><div class="empty-icon">📭</div><h3>Nenhuma postagem</h3><p>Clique em "Novo" para criar sua primeira postagem</p></div>`;
-                return;
-            }
-            grid.innerHTML = posts.map(post => `
-                <div class="card">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                        <div class="card-title">${post.nome}</div>
-                        <div style="font-size:12px;color:var(--text-secondary);">${post.postDate || post.data || '-'}</div>
-                    </div>
-                    <div class="card-desc">${post.descricao}</div>
-                    <div class="card-status">
-                        <span class="status-badge status-${post.status}">${getStatusLabel(post.status)}</span>
-                        ${post.plataforma ? `<span class="status-badge" style="background: rgba(99,102,241,0.2); color: var(--primary);">${getPlatformaLabel(post.plataforma)}</span>` : ''}
-                        <span style="width:8px"></span>
-                        <span class="status-badge status-${post.designStatus || 'nao-iniciado'}">${getDesignLabel(post.designStatus)}</span>
-                        <span style="width:8px"></span>
-                        <span class="status-badge status-${post.videoStatus || 'nao-iniciado'}">${getVideoLabel(post.videoStatus)}</span>
-                    </div>
-                    ${post.link ? `<div class="card-link">🔗 <a href="${post.link}" target="_blank">${post.link}</a></div>` : ''}
-                    <div class="card-actions">
-                        <button class="btn btn-primary btn-small" onclick="editPostagem(${post.id})">Editar</button>
-                        <button class="btn btn-danger btn-small" onclick="deletePostagem(${post.id})">Deletar</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function togglePostLink() {
-            const status = document.getElementById('post-status').value;
-            document.getElementById('post-link-group').style.display = status === 'concluido' ? 'block' : 'none';
-        }
-
-        function savePostagem(evt) {
-            evt.preventDefault();
-            const nome = document.getElementById('post-nome').value;
-            const descricao = document.getElementById('post-desc').value;
-            const status = document.getElementById('post-status').value;
-            const link = document.getElementById('post-link').value;
-            const plataforma = document.getElementById('post-plataforma').value;
-            const postDate = document.getElementById('post-date').value || '';
-            const designStatus = document.getElementById('post-design-status').value || 'nao-iniciado';
-            const videoStatus = document.getElementById('post-video-status').value || 'nao-iniciado';
-
-            if (state.editingId) {
-                const post = state.postagens.find(p => p.id === state.editingId);
-                post.nome = nome; post.descricao = descricao; post.status = status; post.link = link; post.plataforma = plataforma; post.postDate = postDate;
-                post.designStatus = designStatus; post.videoStatus = videoStatus;
-            } else {
-                state.postagens.push({id: Date.now(), nome, descricao, status, link, plataforma, postDate, designStatus, videoStatus, data: new Date().toLocaleDateString('pt-BR')});
-            }
-
-            localStorage.setItem('postagens', JSON.stringify(state.postagens));
-            closeModal(null, 'modal-postagem');
-            renderPostagens();
-            renderCalendar();
-        }
-
-        function editPostagem(id) {
-            state.editingId = id;
-            const post = state.postagens.find(p => p.id === id);
-            document.getElementById('modal-postagem-title').textContent = 'Editar Postagem';
-            document.getElementById('post-nome').value = post.nome;
-            document.getElementById('post-desc').value = post.descricao;
-            document.getElementById('post-status').value = post.status;
-            document.getElementById('post-link').value = post.link || '';
-            document.getElementById('post-plataforma').value = post.plataforma || '';
-            document.getElementById('post-date').value = post.postDate || '';
-            document.getElementById('post-design-status').value = post.designStatus || '';
-            document.getElementById('post-video-status').value = post.videoStatus || '';
-            togglePostLink();
-            document.getElementById('modal_postagem').classList.add('active');
-        }
-
-        function deletePostagem(id) {
-            if (confirm('Deletar esta postagem?')) {
-                state.postagens = state.postagens.filter(p => p.id !== id);
-                localStorage.setItem('postagens', JSON.stringify(state.postagens));
-                renderPostagens();
-                renderCalendar();
-            }
-        }
-
-        function switchMusicaTab(tab) {
-            state.currentMusicaTab = tab;
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            renderMusicasTab(tab);
-        }
-
-        function renderMusicasTab(tab) {
-            const container = document.getElementById('musicas-content');
-            if (state.musicas.length === 0) {
-                container.innerHTML = `<div class="empty-state"><div class="empty-icon">🎵</div><h3>Nenhuma música registrada</h3><p>Clique em "Novo" para adicionar</p></div>`;
-                return;
-            }
-            if (tab === 'status') {
-                container.innerHTML = `<div class="table-wrapper"><table><thead><tr><th>Música</th><th>Descrição</th><th>Plataforma</th><th>Data Lançamento</th><th>Status</th><th>Link</th><th>Ações</th></tr></thead><tbody>${state.musicas.map(m => `<tr><td><strong>${m.nome}</strong></td><td>${m.descricao.substring(0, 40)}...</td><td>${m.plataforma ? `<span class="status-badge" style="background: rgba(99,102,241,0.12); color: var(--primary);">${getPlatformaLabel(m.plataforma)}</span>` : '-'}</td><td>${m.releaseDate ? m.releaseDate : '-'}</td><td><span class="status-badge status-${m.status}">${getStatusLabel(m.status)}</span></td><td>${m.link ? `<a href="${m.link}" target="_blank">🔗</a>` : '-'}</td><td><button class="btn btn-primary btn-small" onclick="editMusica(${m.id})">Editar</button><button class="btn btn-danger btn-small" onclick="deleteMusica(${m.id})">Deletar</button></td></tr>`).join('')}</tbody></table></div>`;
-            } else if (tab === 'capa') {
-                container.innerHTML = `<div class="table-wrapper"><table><thead><tr><th>Música</th><th>Plataforma</th><th>Data Lançamento</th><th>Status Lançamento</th><th>Capa</th><th>Materiais</th><th>Ações</th></tr></thead><tbody>${state.musicas.map(m => `<tr><td><strong>${m.nome}</strong></td><td>${m.plataforma ? `<span class="status-badge" style="background: rgba(99,102,241,0.12); color: var(--primary);">${getPlatformaLabel(m.plataforma)}</span>` : '-'}</td><td>${m.releaseDate ? m.releaseDate : '-'}</td><td><span class="status-badge status-${m.status}">${getStatusLabel(m.status)}</span></td><td><span class="status-badge status-${m.capaStatus}">${getCapaLabel(m.capaStatus)}</span></td><td><span class="status-badge status-${m.materiaisStatus}">${getMateriaisLabel(m.materiaisStatus)}</span></td><td><button class="btn btn-primary btn-small" onclick="editMusica(${m.id})">Editar</button></td></tr>`).join('')}</tbody></table></div>`;
-            }
-        }
-
-        function toggleMusicaFields() {
-            const status = document.getElementById('mus-status').value;
-            document.getElementById('mus-link-group').style.display = status === 'concluido' ? 'block' : 'none';
-        }
-
-        function saveMusica(evt) {
-            evt.preventDefault();
-            const nome = document.getElementById('mus-nome').value;
-            const descricao = document.getElementById('mus-desc').value;
-            const status = document.getElementById('mus-status').value;
-            const link = document.getElementById('mus-link').value;
-            const plataforma = document.getElementById('mus-plataforma').value || '';
-            const releaseDate = document.getElementById('mus-release-date').value || '';
-            const capaStatus = document.getElementById('capa-status').value;
-            const materiaisStatus = document.getElementById('materiais-status').value;
-
-            if (state.editingId) {
-                const musica = state.musicas.find(m => m.id === state.editingId);
-                musica.nome = nome; musica.descricao = descricao; musica.status = status; musica.link = link; musica.plataforma = plataforma; musica.releaseDate = releaseDate; musica.capaStatus = capaStatus; musica.materiaisStatus = materiaisStatus;
-            } else {
-                state.musicas.push({id: Date.now(), nome, descricao, status, link, plataforma, releaseDate, capaStatus, materiaisStatus, data: new Date().toLocaleDateString('pt-BR')});
-            }
-
-            localStorage.setItem('musicas', JSON.stringify(state.musicas));
-            closeModal(null, 'modal-musica');
-            renderMusicasTab(state.currentMusicaTab);
-            renderCalendar();
-        }
-
-        function editMusica(id) {
-            state.editingId = id;
-            const musica = state.musicas.find(m => m.id === id);
-            document.getElementById('modal-musica-title').textContent = 'Editar Música';
-            document.getElementById('mus-nome').value = musica.nome;
-            document.getElementById('mus-desc').value = musica.descricao;
-            document.getElementById('mus-status').value = musica.status;
-            document.getElementById('mus-link').value = musica.link || '';
-            document.getElementById('mus-plataforma').value = musica.plataforma || '';
-            document.getElementById('mus-release-date').value = musica.releaseDate || '';
-            document.getElementById('capa-status').value = musica.capaStatus || '';
-            document.getElementById('materiais-status').value = musica.materiaisStatus || '';
-            toggleMusicaFields();
-            document.getElementById('modal-musica').classList.add('active');
-        }
-
-        function deleteMusica(id) {
-            if (confirm('Deletar esta música?')) {
-                state.musicas = state.musicas.filter(m => m.id !== id);
-                localStorage.setItem('musicas', JSON.stringify(state.musicas));
-                renderMusicasTab(state.currentMusicaTab);
-                renderCalendar();
-            }
-        }
-
-        function getCapaLabel(status) {
-            const labels = {'nao-iniciado': '⭕ Não Iniciado', 'em-progresso': '🔄 Em Progresso', 'concluido': '✓ Concluído'};
-            return labels[status] || '-';
-        }
-
-        function getMateriaisLabel(status) {
-            const labels = {'nao-iniciado': '⭕ Não Iniciado', 'em-progresso': '🔄 Em Progresso', 'concluido': '✓ Concluído'};
-            return labels[status] || '-';
-        }
-
-        function getDesignLabel(status) {
-            const labels = {'nao-iniciado': '⭕ Não Iniciado', 'em-progresso': '🔄 Em Progresso', 'concluido': '✓ Concluído'};
-            return labels[status] || '-';
-        }
-
-        function getVideoLabel(status) {
-            const labels = {'nao-iniciado': '⭕ Não Iniciado', 'em-progresso': '🔄 Em Progresso', 'concluido': '✓ Concluído'};
-            return labels[status] || '-';
-        }
-
-        function getPlatformaLabel(plataforma) {
-            const labels = {
-                /* redes sociais (usadas nas postagens) */
-                'instagram': '📸 Instagram',
-                'tiktok': '🎵 TikTok',
-                'youtube': '▶️ YouTube',
-                'twitter': '𝕏 Twitter/X',
-                'facebook': 'f Facebook',
-                'linkedin': 'in LinkedIn',
-                /* plataformas de música (usadas nas músicas) */
-                'spotify': '🎧 Spotify',
-                'applemusic': '🎵 Apple Music',
-                'youtubemusic': '▶️ YouTube Music',
-                'deezer': '🎶 Deezer',
-                'soundcloud': '☁️ SoundCloud',
-                'suamusica': '🎼 Sua Música',
-                /* fallback */
-                'outros': 'Todas plataformas'
-            };
-            return labels[plataforma] || plataforma;
-        }
-
-        function prevMonth() {
-            state.currentMonth.setMonth(state.currentMonth.getMonth() - 1);
-            renderCalendar();
-        }
-
-        function nextMonth() {
-            state.currentMonth.setMonth(state.currentMonth.getMonth() + 1);
-            renderCalendar();
-        }
-
-        function todayMonth() {
-            state.currentMonth = new Date();
-            renderCalendar();
-        }
-
-        function renderCalendar() {
-            const year = state.currentMonth.getFullYear();
-            const month = state.currentMonth.getMonth();
-
-            const monthName = state.currentMonth.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
-            document.getElementById('calendar-month').textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
-
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const prevLastDay = new Date(year, month, 0);
-
-            const grid = document.getElementById('calendar-grid');
-            let html = '';
-
-            // Dias do mês anterior
-            for (let i = firstDay.getDay() - 1; i >= 0; i--) {
-                const day = prevLastDay.getDate() - i;
-                html += `<div class="day-cell other-month"><div class="day-number">${day}</div></div>`;
-            }
-
-            // Dias do mês atual
-            const today = new Date();
-            for (let day = 1; day <= lastDay.getDate(); day++) {
-                const date = new Date(year, month, day);
-                const dateStr = date.toISOString().split('T')[0];
-
-                // Combine eventos, postagens e musicas que possuem data
-                const combinedEvents = [];
-                state.eventos.forEach(e => { if (e && e.data) combinedEvents.push({ titulo: e.titulo, data: e.data, type: 'evento' }); });
-                state.postagens.forEach(p => { if (p && p.postDate) combinedEvents.push({ titulo: `Post: ${p.nome}`, data: p.postDate, type: 'post' }); });
-                state.musicas.forEach(m => { if (m && m.releaseDate) combinedEvents.push({ titulo: `Lançamento: ${m.nome}`, data: m.releaseDate, type: 'musica' }); });
-
-                const dayEvents = combinedEvents.filter(e => e.data === dateStr);
-                const isToday = date.toDateString() === today.toDateString();
-
-                html += `<div class="day-cell ${isToday ? 'today' : ''}" onclick="openEventoModal('${dateStr}')">
-                    <div class="day-number">${day}</div>
-                    <div class="day-events-list">
-                        ${dayEvents.map(e => `<div class='day-event'>${e.titulo}</div>`).join('')}
-                    </div>
-                </div>`;
-            }
-
-            // Dias do próximo mês
-            const totalCells = firstDay.getDay() + lastDay.getDate();
-            const remainingDays = 42 - totalCells;
-            for (let day = 1; day <= remainingDays; day++) {
-                html += `<div class="day-cell other-month"><div class="day-number">${day}</div></div>`;
-            }
-
-            grid.innerHTML = html;
-        }
-
-        function openEventoModal(dateStr) {
-            document.getElementById('ev-titulo').value = '';
-            document.getElementById('ev-data').value = dateStr;
-            document.getElementById('ev-desc').value = '';
-            document.getElementById('modal-evento').classList.add('active');
-        }
-
-        function saveEvento(evt) {
-            evt.preventDefault();
-            const titulo = document.getElementById('ev-titulo').value;
-            const data = document.getElementById('ev-data').value;
-            const descricao = document.getElementById('ev-desc').value;
-            state.eventos.push({id: Date.now(), titulo, data, descricao});
-            localStorage.setItem('eventos', JSON.stringify(state.eventos));
-            closeModal(null, 'modal-evento');
-            renderCalendar();
-        }
-
-        function getStatusLabel(status) {
-            const labels = {'concluido': '✓ Concluído', 'pendente': '⏳ Pendente', 'rascunho': '📝 Rascunho', 'fazendo': '⚙️ Fazendo'};
-            return labels[status] || status;
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
-        });
-    </script>
+    // Init
+    render();
+</script>
 </body>
 </html>
